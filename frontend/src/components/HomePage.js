@@ -1,7 +1,10 @@
 import { render } from "react-dom";
 
-export default function HomePage() {
+export default function HomePage(props) {
     return (
-        <h1>This is the homepage</h1>
+        <div>
+            <h1>This is the homepage</h1>
+            <p>Hello, {props.name}</p>
+        </div>
     );
 }
