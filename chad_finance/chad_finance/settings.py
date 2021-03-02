@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 import environ
+import os
+import datetime
 
 from pathlib import Path
 
@@ -46,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'djoser',
     'api.apps.ApiConfig'
 ]
 
@@ -128,3 +131,61 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend'
+)
+
+SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES': ('JWT',),
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=1),
+    'AUTH_TOKEN_CLASSES': (
+        'rest_framework_simplejwt.tokens.AccessToken',
+    )
+}
+
+DJOSER = {
+    'LOGIN_FIELD': 'email',
+    'USER_CREATE_PASSWORD_RETYPE': True,
+    'USERNAME_CHANGED_EMAIL_CONFIRMATION': True,
+    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
+    'SEND_CONFIRMATION_EMAIL': True,
+    'SET_PASSWORD_RETYPE': True,
+    'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_URL': 'email/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL': 'activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
+    'SOCIAL_AUTH_TOKEN_STRATEGY': 'djoser.social.token.jwt.TokenStrategy',
+    'SERIALIZERS': {
+        'user_create': 'api.serializers.UserCreateSerializer',
+        'user': 'api.serializers.UserCreateSerializer',
+        'current_user': 'api.serializers.UserCreateSerializer',
+        'user_delete': 'djoser.serializers.UserDeleteSerializer',
+    }
+}
+
+# Email setup
+# TODO: -Put the real info for production
+
+# File based email backend
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, "log")
+
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
+# EMAIL_HOST_USER = ''
+# EMAIL_HOST_PASSWORD = ''
+# EMAIL_USE_TLS = False
+# DEFAULT_FROM_EMAIL = ''
+
+AUTH_USER_MODEL = 'api.UserAccount'
