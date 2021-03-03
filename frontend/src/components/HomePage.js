@@ -1,7 +1,12 @@
 import React from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import {AppBar, Toolbar, IconButton, Typography, InputBase, Badge, MenuItem, Menu} from "@material-ui/core";
-import {MenuIcon, SearchIcon, AccountCircle, MailIcon, NotificationsIcon, MoreIcon} from "@material-ui/icons";
+import MenuIcon from '@material-ui/icons/Menu';
+import SearchIcon from '@material-ui/icons/Search';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import MailIcon from '@material-ui/icons/Mail';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import MoreIcon from '@material-ui/icons/MoreVert';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
