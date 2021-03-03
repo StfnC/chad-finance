@@ -22,11 +22,11 @@ class UserAccountManager(BaseUserManager):
         user = self.create_user(
             email,
             password=password,
+            is_staff=True,
             is_superuser=True,
             **kwargs
         )
 
         user.is_active = True
-        user.is_email_verified = True
         user.save(using=self._db)
         return user
