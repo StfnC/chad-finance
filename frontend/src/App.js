@@ -7,6 +7,7 @@ function App() {
   return (
     <div className="center"> 
       <Login />
+      <HomePage />
 
       </div>
   );
