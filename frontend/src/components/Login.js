@@ -9,39 +9,75 @@ import { Button, ButtonGroup, Typography, TextField, Paper } from "@material-ui/
   Redirect,
 } from "react-router-dom"; */
 
+
+const useStyles = makeStyles((theme) => ({
+    root:{
+        "& > *": {
+       // width: theme.spacing(60),
+       // height: theme.spacing(20),
+        backgroundColor: lightGreen[50],
+        },
+       
+    },
+    space:{
+        margin: theme.spacing(1),
+    }
+    
+
+}));
+
+
  export default function Login (props) {
     const {classes} = props;
         const [email, setEmail] = useState('');
         const [password, setPassword] = useState('');
+        const classe = useStyles();
     
        function handleSubmit(event) {
             event.preventDefault();
             console.log( 'Email:', email, 'Password: ', password); 
-           // You should see email and password in console.
-           // ..code to submit form to backend here...
-    
+           
+           /* fetch("/api/")
+            .then((response) => response.json())
+            .then((data) => 
+            console.log(data)
+            ); */
+        
+     
         }
+
     
-        return( <div >
-                <Paper>
+        return( <div className={classe.root}>
+          
+                <Paper >
+                    <Typography className={classe.space} align= "center" color="textPrimary" variant ="h2">Log in</Typography>
                     <form onSubmit={handleSubmit} >
                         <TextField
-                                              
-                            value={email}
-                            onInput={ e=>setEmail(e.target.value)}
+                           className={classe.space}
+                           label="Username"
+                           variant ="outlined"      
+                           placeholder="nom d'utilisateur"             
+                           value={email}
+                           onInput={ e=>setEmail(e.target.value)}
+                           
                             
     
                         />
                         <TextField
-                            
+                            className={classe.space}
+                            label = "Mot de passe"
+                            variant = "outlined"
+                            placeholder = "Mot de passe"
                             value={password}
                             onInput={ e=>setPassword(e.target.value)}
                             
                         />
                         <Typography />
                         <Button
-                            type="submit"                            
-                            
+                            className={classe.space}
+                            type="submit"    
+                            variant="contained" 
+                            color="primary"                                                  
                         >
                             Login
                         </Button>
@@ -50,6 +86,7 @@ import { Button, ButtonGroup, Typography, TextField, Paper } from "@material-ui/
                         Pas encore de compte? <Link to='/register'>Créer un compte</Link>
                     </p>
                 </Paper>
+                
             </div>
         );
 }
