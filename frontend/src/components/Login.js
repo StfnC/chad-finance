@@ -1,6 +1,6 @@
 import React, { Component, useState} from 'react';
-import { render } from 'react-dom';
-import { Grid, Button, ButtonGroup, Typography, TextField, Paper } from "@material-ui/core";
+import { Link } from 'react-router-dom';
+import { Button, ButtonGroup, Typography, TextField, Paper } from "@material-ui/core";
 /*import {
   BrowserRouter as Router,
   Switch,
@@ -47,11 +47,9 @@ import { Grid, Button, ButtonGroup, Typography, TextField, Paper } from "@materi
                         </Button>
                     </form>
                     <p>
-                        Pas encore de compte? <a href ="http://localhost:8000/admin">Regsiter</a>
+                        Pas encore de compte? <Link to='/register'>Créer un compte</Link>
                     </p>
                 </Paper>
             </div>
         );
 }
-    
-        

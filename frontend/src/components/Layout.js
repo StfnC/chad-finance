@@ -1,4 +1,3 @@
-import React from 'react';
 import '../App.css';
 
 export default function Layout(props) {
@@ -6,5 +5,5 @@ export default function Layout(props) {
         <div className="center">
             {props.children}
         </div>
-    )
+    );
 }
