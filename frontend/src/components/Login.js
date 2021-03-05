@@ -1,8 +1,7 @@
-import React, { Component, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, Redirect } from "react-router-dom";
 import {
     Button,
-    ButtonGroup,
     Typography,
     TextField,
     Paper,
@@ -10,13 +9,6 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from 'react-redux';
 import { login } from '../actions/auth';
-/*import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect,
-} from "react-router-dom"; */
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -31,7 +23,9 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Login = ({ login }) => {
+const Login = ({ login, isAuthenticated }) => {
+    // TODO: Ajouter une option remember me qui utilise le refresh token pour obtenir un nouveau access token chaque fois que l'utilisateur est loaded in
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const classe = useStyles();
@@ -39,11 +33,10 @@ const Login = ({ login }) => {
     function onSubmit(event) {
         event.preventDefault();
         login(email, password);
-        /* fetch("/api/")
-         .then((response) => response.json())
-         .then((data) => 
-         console.log(data)
-         ); */
+    }
+
+    if (isAuthenticated) {
+        return <Redirect to='/' />;
     }
 
     return (
@@ -94,4 +87,8 @@ const Login = ({ login }) => {
     );
 }
 
-export default connect(null, { login })(Login);
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { login })(Login);

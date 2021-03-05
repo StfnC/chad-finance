@@ -1,5 +1,19 @@
-import "../App.css";
+import '../App.css';
+import { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { checkAuthenticated, loadUser } from '../actions/auth';
 
-export default function Layout(props) {
-    return <div className="center">{props.children}</div>;
-}
+const Layout = (props) => {
+    useEffect(() => {
+        props.checkAuthenticated();
+        props.loadUser();
+    }, []);
+
+    return (
+        <div className="center">
+            {props.children}
+        </div>
+    );
+};
+
+export default connect(null, { checkAuthenticated, loadUser })(Layout);
