@@ -5,56 +5,55 @@ import {
     LOAD_USER_FAIL,
     AUTHENTICATED_SUCCESS,
     AUTHENTICATED_FAIL,
-    LOGOUT
-} from './types';
+    LOGOUT,
+} from "./types";
 
-export const loadUser = () => async dispatch => {
-    if (localStorage.getItem('access')) {
-        const url = 'http://localhost:8000/auth/users/me/'
+export const loadUser = () => async (dispatch) => {
+    if (localStorage.getItem("access")) {
+        const url = "http://localhost:8000/auth/users/me/";
         const body = {
-            method: 'GET',
+            method: "GET",
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `JWT ${localStorage.getItem('access')}`,
-                'Accept': 'application/json'
-            }
-        }
+                "Content-Type": "application/json",
+                Authorization: `JWT ${localStorage.getItem("access")}`,
+                Accept: "application/json",
+            },
+        };
         try {
             const res = await fetch(url, body);
 
             if (res.ok) {
                 dispatch({
                     type: LOAD_USER_SUCCESS,
-                    payload: await res.json()
+                    payload: await res.json(),
                 });
             } else {
                 dispatch({
-                    type: LOAD_USER_FAIL
+                    type: LOAD_USER_FAIL,
                 });
             }
-
         } catch (error) {
             dispatch({
-                type: LOAD_USER_FAIL
+                type: LOAD_USER_FAIL,
             });
         }
     } else {
         dispatch({
-            type: LOAD_USER_FAIL
+            type: LOAD_USER_FAIL,
         });
     }
 };
 
-export const login = (email, password) => async dispatch => {
+export const login = (email, password) => async (dispatch) => {
     // TODO: Remplacer le base url par une variable dans .env
-    const url = 'http://localhost:8000/auth/jwt/create/'
+    const url = "http://localhost:8000/auth/jwt/create/";
     const body = {
-        method: 'POST',
+        method: "POST",
         headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password })
-    }
+        body: JSON.stringify({ email, password }),
+    };
 
     try {
         const res = await fetch(url, body);
@@ -62,60 +61,60 @@ export const login = (email, password) => async dispatch => {
         if (res.ok) {
             dispatch({
                 type: LOGIN_SUCCESS,
-                payload: await res.json()
+                payload: await res.json(),
             });
 
             dispatch(loadUser());
         } else {
             dispatch({
-                type: LOGIN_FAIL
+                type: LOGIN_FAIL,
             });
         }
     } catch (error) {
         dispatch({
-            type: LOGIN_FAIL
+            type: LOGIN_FAIL,
         });
     }
 };
 
-export const checkAuthenticated = () => async dispatch => {
-    if (localStorage.getItem('access')) {
-        const url = 'http://localhost:8000/auth/jwt/verify/'
+export const checkAuthenticated = () => async (dispatch) => {
+    if (localStorage.getItem("access")) {
+        const url = "http://localhost:8000/auth/jwt/verify/";
         const body = {
-            method: 'POST',
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json'
+                "Content-Type": "application/json",
             },
-            body: JSON.stringify({ token: localStorage.getItem('access') })
-        }
+            body: JSON.stringify({ token: localStorage.getItem("access") }),
+        };
 
         try {
             const res = await fetch(url, body);
 
             // Ce code est renvoyé par /verify/ lorsqu'on send un token invalide
-            if (await res.json().code !== 'token_not_valid') {
+            if ((await res.json().code) !== "token_not_valid") {
                 dispatch({
-                    type: AUTHENTICATED_SUCCESS
-                })
+                    type: AUTHENTICATED_SUCCESS,
+                });
             } else {
                 dispatch({
-                    type: AUTHENTICATED_FAIL
-                })
+                    type: AUTHENTICATED_FAIL,
+                });
             }
         } catch (error) {
             dispatch({
-                type: AUTHENTICATED_FAIL
-            })
+                type: AUTHENTICATED_FAIL,
+            });
         }
     } else {
         dispatch({
-            type: AUTHENTICATED_FAIL
-        })
+            type: AUTHENTICATED_FAIL,
+        });
     }
-}
+};
 
-export const logout = () => dispatch => {
+export const logout = () => (dispatch) => {
     dispatch({
-        type: LOGOUT
-    })
+        type: LOGOUT,
+    });
 };

@@ -1,8 +1,8 @@
-import '../App.css';
-import { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { checkAuthenticated, loadUser } from '../actions/auth';
-import Navbar from './Navbar';
+import "../App.css";
+import { useEffect } from "react";
+import { connect } from "react-redux";
+import { checkAuthenticated, loadUser } from "../actions/auth";
+import Navbar from "./Navbar";
 
 const Layout = (props) => {
     useEffect(() => {
@@ -13,9 +13,7 @@ const Layout = (props) => {
     return (
         <div>
             <Navbar />
-            <div className='center'>
-                {props.children}
-            </div>
+            <div className="center">{props.children}</div>
         </div>
     );
 };

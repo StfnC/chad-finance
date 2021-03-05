@@ -4,8 +4,8 @@ import Layout from "./components/Layout";
 import HomePage from "./components/HomePage";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import { Provider } from 'react-redux';
-import store from './store';
+import { Provider } from "react-redux";
+import store from "./store";
 
 export default function App() {
     return (

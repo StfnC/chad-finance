@@ -1,14 +1,9 @@
 import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
-import {
-    Button,
-    Typography,
-    TextField,
-    Paper,
-} from "@material-ui/core";
+import { Button, Typography, TextField, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { connect } from 'react-redux';
-import { login } from '../actions/auth';
+import { connect } from "react-redux";
+import { login } from "../actions/auth";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -36,7 +31,7 @@ const Login = ({ login, isAuthenticated }) => {
     }
 
     if (isAuthenticated) {
-        return <Redirect to='/' />;
+        return <Redirect to="/" />;
     }
 
     return (
@@ -85,10 +80,10 @@ const Login = ({ login, isAuthenticated }) => {
             </Paper>
         </div>
     );
-}
+};
 
-const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated
+const mapStateToProps = (state) => ({
+    isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, { login })(Login);

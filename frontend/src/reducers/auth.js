@@ -5,14 +5,14 @@ import {
     LOAD_USER_FAIL,
     AUTHENTICATED_SUCCESS,
     AUTHENTICATED_FAIL,
-    LOGOUT
-} from '../actions/types';
+    LOGOUT,
+} from "../actions/types";
 
 const initialState = {
-    access: localStorage.getItem('access'),
-    refresh: localStorage.getItem('refresh'),
+    access: localStorage.getItem("access"),
+    refresh: localStorage.getItem("refresh"),
     isAuthenticated: null,
-    user: null
+    user: null,
 };
 
 export default function (state = initialState, action) {
@@ -20,44 +20,44 @@ export default function (state = initialState, action) {
 
     switch (type) {
         case LOGIN_SUCCESS:
-            localStorage.setItem('access', payload.access);
-            localStorage.setItem('refresh', payload.refresh);
+            localStorage.setItem("access", payload.access);
+            localStorage.setItem("refresh", payload.refresh);
             return {
                 ...state,
                 access: payload.access,
                 refresh: payload.refresh,
-                isAuthenticated: true
-            }
+                isAuthenticated: true,
+            };
         case LOAD_USER_SUCCESS:
             return {
                 ...state,
-                user: payload
-            }
+                user: payload,
+            };
         case LOAD_USER_FAIL:
             return {
                 ...state,
-                user: null
-            }
+                user: null,
+            };
         case LOGOUT:
         case LOGIN_FAIL:
-            localStorage.removeItem('access');
-            localStorage.removeItem('refresh');
+            localStorage.removeItem("access");
+            localStorage.removeItem("refresh");
             return {
                 ...state,
                 access: null,
                 refresh: null,
-                isAuthenticated: null
-            }
+                isAuthenticated: null,
+            };
         case AUTHENTICATED_SUCCESS:
             return {
                 ...state,
-                isAuthenticated: true
-            }
+                isAuthenticated: true,
+            };
         case AUTHENTICATED_FAIL:
             return {
                 ...state,
-                isAuthenticated: false
-            }
+                isAuthenticated: false,
+            };
         default:
             return state;
     }
