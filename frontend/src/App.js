@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Layout from "./components/Layout";
-import HomePage from "./components/HomePage";
+import Home from "./components/Home";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import { Provider } from "react-redux";
@@ -13,7 +13,7 @@ export default function App() {
             <Router>
                 <Layout>
                     <Switch>
-                        <Route exact path="/" component={HomePage} />
+                        <Route exact path="/" component={Home} />
                         <Route exact path="/login" component={Login} />
                         <Route exact path="/register" component={Register} />
                     </Switch>
