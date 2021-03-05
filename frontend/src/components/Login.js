@@ -8,6 +8,8 @@ import {
     Paper,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { connect } from 'react-redux';
+import { login } from '../actions/auth';
 /*import {
   BrowserRouter as Router,
   Switch,
@@ -29,8 +31,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Login(props) {
-    const { classes } = props;
+const Login = ({ login }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const classe = useStyles();
@@ -38,7 +39,7 @@ export default function Login(props) {
     function onSubmit(event) {
         event.preventDefault();
         console.log("Email:", email, "Password: ", password);
-
+        login(email, password);
         /* fetch("/api/")
          .then((response) => response.json())
          .then((data) => 
@@ -93,3 +94,5 @@ export default function Login(props) {
         </div>
     );
 }
+
+export default connect(null, { login })(Login);
