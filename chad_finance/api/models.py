@@ -7,6 +7,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     """
     Model des utilisateurs
     """
+    # TODO: Rendre le primary key en UUID
     email = models.EmailField(max_length=255, unique=True)
     first_name = models.CharField(max_length=32)
     last_name = models.CharField(max_length=32)

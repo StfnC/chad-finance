@@ -22,7 +22,7 @@ export const loadUser = () => async dispatch => {
         if (res.ok) {
             dispatch({
                 type: LOAD_USER_SUCCESS,
-                payload: res.json()
+                payload: await res.json()
             });
         } else {
             dispatch({
@@ -49,10 +49,11 @@ export const login = (email, password) => async dispatch => {
 
     const res = await fetch(url, body);
 
+    // FIXME: Crash quand on send des mauvaise données, maybe englober avec try/catch
     if (res.ok) {
         dispatch({
             type: LOGIN_SUCCESS,
-            payload: res.json()
+            payload: await res.json()
         });
 
         dispatch(loadUser());

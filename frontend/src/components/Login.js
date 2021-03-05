@@ -38,7 +38,6 @@ const Login = ({ login }) => {
 
     function onSubmit(event) {
         event.preventDefault();
-        console.log("Email:", email, "Password: ", password);
         login(email, password);
         /* fetch("/api/")
          .then((response) => response.json())
