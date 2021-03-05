@@ -12,7 +12,7 @@ export const loadUser = () => async dispatch => {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorisation': `JWT ${localStorage.getItem('access')}`,
+                'Authorization': `JWT ${localStorage.getItem('access')}`,
                 'Accept': 'application/json'
             }
         }
