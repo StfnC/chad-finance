@@ -4,16 +4,16 @@ import { connect } from "react-redux";
 import { checkAuthenticated, loadUser } from "../actions/auth";
 import Navbar from "./Navbar";
 
-const Layout = (props) => {
+const Layout = ({ checkAuthenticated, loadUser, children }) => {
     useEffect(() => {
-        props.checkAuthenticated();
-        props.loadUser();
-    }, []);
+        checkAuthenticated();
+        loadUser();
+    });
 
     return (
         <div>
             <Navbar />
-            <div className="center">{props.children}</div>
+            <div className="center">{children}</div>
         </div>
     );
 };
