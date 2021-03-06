@@ -5,6 +5,7 @@ class UserAccountManager(BaseUserManager):
     """
     Manager des utilisateurs
     """
+
     def create_user(self, email, password=None, **kwargs):
         if not email:
             raise ValueError('Users must have an email address')
