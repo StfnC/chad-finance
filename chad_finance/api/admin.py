@@ -1,14 +1,14 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .models import UserAccount
+from .models import UserAccount, Portfolio, Trade
 from .forms import UserAccountCreationForm, UserAccountChangeForm
-
 
 # Register your models here.
 
 admin.site.site_header = "Chad Finance"
 admin.site.site_title = "Chad Finance"
 admin.site.index_title = "Chad Finance"
+
 
 class UserAdmin(BaseUserAdmin):
     # Forms to add and change user instances
@@ -35,4 +35,7 @@ class UserAdmin(BaseUserAdmin):
     ordering = ("email", "first_name", "last_name")
     filter_horizontal = ()
 
+
 admin.site.register(UserAccount, UserAdmin)
+admin.site.register(Portfolio)
+admin.site.register(Trade)
