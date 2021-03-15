@@ -18,6 +18,9 @@ class PortfolioRetrieveAPIView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class PortfolioCreateAPIView(generics.CreateAPIView):
+	"""
+	Vue qui permet de creer un portfolio
+	"""
 	queryset = Portfolio.objects.all()
 	serializer_class = PortfolioSerializer
 
@@ -26,18 +29,24 @@ class PortfolioCreateAPIView(generics.CreateAPIView):
 	
 class TradeRetrieveAPIView(generics.RetrieveUpdateDestroyAPIView):
 	"""
-    Vue qui permet de récuperer l'information sur un trade
+    Vue qui permet de recuperer l'information sur un trade
     """
 	queryset = Trade.objects.all()
 	serializer_class = TradeSerializer
 
 
 class TradeCreateAPIView(generics.CreateAPIView):
+	"""
+	Vue de creer un trade
+	"""
 	queryset = Trade.objects.all()
 	serializer_class = TradeSerializer
 
 
 class TradeListAPIView(generics.ListAPIView):
+	"""
+	Vue qui permet de recuperer les trades
+	"""
 	queryset = Trade.objects.all()
 	serializer_class = TradeSerializer
 
