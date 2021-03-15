@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from .views import PortfolioCreateAPIView, PortfolioRetrieveAPIView, TradeCreateAPIView, TradeListAPIView, TradeRetrieveAPIView
+from .views import PortfolioCreateAPIView, PortfolioRetrieveAPIView, TradeCreateAPIView, TradeListAPIView, TradeRetrieveAPIView, DeleteAccountView
 
 urlpatterns = [
 
@@ -14,6 +14,7 @@ urlpatterns = [
     path('trade/<int:pk>', TradeRetrieveAPIView.as_view()),
     path('trade/', TradeCreateAPIView.as_view()),
     path('trade/all', TradeListAPIView.as_view()),
+    path('user/delete', DeleteAccountView.as_view()),
 ]
 
 # quand un l'utilisateur est dirige vers un url la 'view' appropriee est appelee automatiquement

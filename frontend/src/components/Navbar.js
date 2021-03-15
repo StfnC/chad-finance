@@ -27,17 +27,34 @@ const Navbar = ({ logout, isAuthenticated }) => {
 
     const anonymLinks = () => {
         return (
-            <Link color="inherit" to="/login">
+            <Button
+                color="secondary"
+                variant="contained"
+                /*to = "/login"*/ onClick={(event) =>
+                    (window.location.href = "/login")
+                }
+            >
                 Login
-            </Link>
+            </Button>
+            /* <Link color="inherit" to="/login" >
+                 Login
+             </Link> */
         );
     };
 
     const userLinks = () => {
         return (
-            <Link color="inherit" to="/login" onClick={logout}>
+            <Button
+                color="secondary"
+                variant="contained"
+                to="/login"
+                onClick={logout}
+            >
                 Logout
-            </Link>
+            </Button>
+            /*    <Link color="inherit" to="/login" onClick={logout}>
+                    Logout
+                </Link>*/
         );
     };
 
