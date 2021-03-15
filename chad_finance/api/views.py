@@ -54,4 +54,10 @@ class DeleteAccountView(generics.DestroyAPIView):
     """
     Vue qui permet de supprimer l'entirerte du compte personnel
     """
-    queryset = UserAccount.objects.all().delete()
+
+    queryset = UserAccount.objects.all()
+
+    def delete(self, request):
+        # TODO: Donner une autre réponse peut-être
+        UserAccount.objects.get(pk=request.user.pk).delete()
+        return Response({"user" : "User has been deleted"})
