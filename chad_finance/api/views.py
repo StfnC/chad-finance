@@ -17,8 +17,8 @@ class PorfolioListAPIView(generics.ListAPIView):
 
 
 class PortfolioListCreate(generics.ListCreateAPIView):
-   queryset = Portfolio.objects.all()
-	serializer_class = PortfolioSerializer
+    queryset = Portfolio.objects.all()
+    serializer_class = PortfolioSerializer
 
 
 # trade views
@@ -34,5 +34,8 @@ class TradeListAPIView(generics.ListAPIView):
 
 
 class TradeListCreate(generics.ListCreateAPIView):
-  queryset = Trade.objects.all()
+    queryset = Trade.objects.all()
 	serializer_class = TradeSerializer
+
+class DeleteViewAccount (generics.DestroyAPIView):
+	queryset = UserAccount.objects.all().delete()

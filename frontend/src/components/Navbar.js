@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, Button } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -27,17 +27,23 @@ const Navbar = ({ logout, isAuthenticated }) => {
 
     const anonymLinks = () => {
         return (
-            <Link color="inherit" to="/login">
+            <Button color= "secondary" variant="contained" /*to = "/login"*/ onClick={event =>  window.location.href='/login' }>
                 Login
-            </Link>
+            </Button> 
+           /* <Link color="inherit" to="/login" >
+                Login
+            </Link> */
         );
     };
 
     const userLinks = () => {
         return (
-            <Link color="inherit" to="/login" onClick={logout}>
+            <Button color= "secondary"  variant="contained" to = "/login" onClick={logout} >
                 Logout
-            </Link>
+            </Button> 
+        /*    <Link color="inherit" to="/login" onClick={logout}>
+                Logout
+            </Link>*/
         );
     };
 
