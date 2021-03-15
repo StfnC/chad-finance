@@ -1,6 +1,7 @@
 from .models import UserAccount, Portfolio, Trade
 from .serializers import PortfolioSerializer, TradeSerializer
 from rest_framework import generics
+from rest_framework.response import Response 
 from django.contrib.auth.models import User
 from django.shortcuts import render
 
@@ -10,8 +11,8 @@ from django.shortcuts import render
 
 class PortfolioRetrieveAPIView(generics.RetrieveUpdateDestroyAPIView):
     """
-Vue qui permet de récuperer l'information sur un portfolio
-"""
+	Vue qui permet de récuperer l'information sur un portfolio
+	"""
     queryset = Portfolio.objects.all()
     serializer_class = PortfolioSerializer
 
@@ -28,8 +29,8 @@ class PortfolioCreateAPIView(generics.CreateAPIView):
 
 class TradeRetrieveAPIView(generics.RetrieveUpdateDestroyAPIView):
     """
-Vue qui permet de recuperer l'information sur un trade
-"""
+	Vue qui permet de recuperer l'information sur un trade
+	"""
     queryset = Trade.objects.all()
     serializer_class = TradeSerializer
 
