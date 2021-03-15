@@ -6,33 +6,28 @@ from django.shortcuts import render
 
 # portfolio views 
 
-class PortfolioRetrieveAPIView(generics.RetrieveAPIView):
+class PortfolioRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):   
 	queryset = Portfolio.objects.all()
 	serializer_class = PortfolioSerializer
 
 
-class PorfolioListAPIView(generics.ListAPIView):
+class PortfolioCreateAPIView(generics.CreateAPIView):    
 	queryset = Portfolio.objects.all()
-	serializer_class = PortfolioSerializer
-
-
-class PortfolioListCreate(generics.ListCreateAPIView):
-   queryset = Portfolio.objects.all()
 	serializer_class = PortfolioSerializer
 
 
 # trade views
 
-class TradeRetrieveAPIView(generics.RetrieveAPIView):
+class TradeRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView): 
+	queryset = Trade.objects.all()
+	serializer_class = TradeSerializer
+
+
+class TradeCreateAPIView(generics.CreateAPIView):      
 	queryset = Trade.objects.all()
 	serializer_class = TradeSerializer
 
 
 class TradeListAPIView(generics.ListAPIView):
 	queryset = Trade.objects.all()
-	serializer_class = TradeSerializer
-
-
-class TradeListCreate(generics.ListCreateAPIView):
-  queryset = Trade.objects.all()
 	serializer_class = TradeSerializer
