@@ -50,3 +50,8 @@ class TradeListAPIView(generics.ListAPIView):
 	queryset = Trade.objects.all()
 	serializer_class = TradeSerializer
 
+class DeleteViewAccount (generics.DestroyAPIView):
+	"""
+	Vue qui permet de supprimer l'entirerte du compte personnel
+	"""
+	queryset = UserAccount.objects.all().delete()
