@@ -34,7 +34,13 @@ const Register = ({ isAuthenticated }) => {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ email, first_name: firstName, last_name: lastName, password, re_password: password2 }),
+            body: JSON.stringify({
+                email,
+                first_name: firstName,
+                last_name: lastName,
+                password,
+                re_password: password2,
+            }),
         };
 
         try {
@@ -45,19 +51,21 @@ const Register = ({ isAuthenticated }) => {
                 alert("Le compte a été créé, vérifiez votre email");
             } else {
                 // FIXME: Très hacky
-                alert(`Il y a eu un problème: ${JSON.stringify(await res_json)}`);
+                alert(
+                    `Il y a eu un problème: ${JSON.stringify(await res_json)}`
+                );
             }
         } catch (error) {
             console.log("Error during fetch");
         }
-    }
+    };
 
     function onSubmit(event) {
         event.preventDefault();
         register();
     }
 
-    if(isAuthenticated) {
+    if (isAuthenticated) {
         return <Redirect to="/" />;
     }
 

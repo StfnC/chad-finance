@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router";
 
 const Home = ({ isAuthenticated }) => {
-    const [name, setName] = useState('');
+    const [name, setName] = useState("");
 
     // Fonction permettant de récuperer le nom de l'utilisateur
     const initName = async () => {
@@ -23,11 +23,11 @@ const Home = ({ isAuthenticated }) => {
         } catch (error) {
             console.log(error);
         }
-    }
+    };
 
     useEffect(() => {
         initName();
-    }, [])
+    }, []);
 
     if (!isAuthenticated) {
         return <Redirect to="/login" />;
