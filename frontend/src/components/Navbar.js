@@ -23,22 +23,15 @@ const useStyles = makeStyles((theme) => ({
 const Navbar = ({ logout, isAuthenticated }) => {
     const classes = useStyles();
 
-    // TODO: Transformer Logout et Login en boutons pour les rendre plus beaux
-
     const anonymLinks = () => {
         return (
             <Button
                 color="secondary"
                 variant="contained"
-                /*to = "/login"*/ onClick={(event) =>
-                    (window.location.href = "/login")
-                }
+                onClick={(event) => (window.location.href = "/login")}
             >
                 Login
             </Button>
-            /* <Link color="inherit" to="/login" >
-                 Login
-             </Link> */
         );
     };
 
@@ -52,9 +45,6 @@ const Navbar = ({ logout, isAuthenticated }) => {
             >
                 Logout
             </Button>
-            /*    <Link color="inherit" to="/login" onClick={logout}>
-                    Logout
-                </Link>*/
         );
     };
 

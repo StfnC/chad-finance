@@ -6,7 +6,38 @@ import {
     AUTHENTICATED_SUCCESS,
     AUTHENTICATED_FAIL,
     LOGOUT,
+    VERIFY_SUCCESS,
+    VERIFY_FAIL,
 } from "./types";
+
+export const verify = (uid, token) => async (dispatch) => {
+    const url = "http://localhost:8000/auth/users/activation/";
+    const body = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ uid, token }),
+    };
+
+    try {
+        const res = await fetch(url, body);
+
+        if (res.ok) {
+            dispatch({
+                type: VERIFY_SUCCESS,
+            });
+        } else {
+            dispatch({
+                type: VERIFY_FAIL,
+            });
+        }
+    } catch (error) {
+        dispatch({
+            type: VERIFY_FAIL,
+        });
+    }
+};
 
 export const loadUser = () => async (dispatch) => {
     if (localStorage.getItem("access")) {

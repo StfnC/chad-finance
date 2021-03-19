@@ -6,6 +6,8 @@ import {
     AUTHENTICATED_SUCCESS,
     AUTHENTICATED_FAIL,
     LOGOUT,
+    VERIFY_SUCCESS,
+    VERIFY_FAIL,
 } from "../actions/types";
 
 const initialState = {
@@ -15,7 +17,9 @@ const initialState = {
     user: null,
 };
 
-export default function (state = initialState, action) {
+// TODO: Implementer un systeme de messages qui indique a l'utilisateur si qqchose a fail (register, login, etc.)
+
+export default function reducer(state = initialState, action) {
     const { type, payload } = action;
 
     switch (type) {
@@ -58,6 +62,8 @@ export default function (state = initialState, action) {
                 ...state,
                 isAuthenticated: false,
             };
+        case VERIFY_SUCCESS: // TODO: Implementer d'autres states, peut-etre ajouter des messages pour l'utilisateur
+        case VERIFY_FAIL:
         default:
             return state;
     }
