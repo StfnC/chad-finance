@@ -8,7 +8,11 @@ import {
     LOGOUT,
     VERIFY_SUCCESS,
     VERIFY_FAIL,
+    REGISTER_SUCCESS,
+    REGISTER_FAIL,
 } from "./types";
+
+// Toute la partie authentification est inspirée de ce tutoriel: https://www.youtube.com/playlist?list=PLJRGQoqpRwdfoa9591BcUS6NmMpZcvFsM
 
 export const verify = (uid, token) => async (dispatch) => {
     const url = "http://localhost:8000/auth/users/activation/";
@@ -35,6 +39,48 @@ export const verify = (uid, token) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: VERIFY_FAIL,
+        });
+    }
+};
+
+export const register = (
+    email,
+    firstName,
+    lastName,
+    password,
+    password2
+) => async (dispatch) => {
+    // TODO: Remplacer le base url par une variable dans .env
+    const url = "http://localhost:8000/auth/users/";
+    const body = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            email,
+            first_name: firstName,
+            last_name: lastName,
+            password,
+            re_password: password2,
+        }),
+    };
+
+    try {
+        const res = await fetch(url, body);
+
+        if (res.ok) {
+            dispatch({
+                type: REGISTER_SUCCESS,
+            });
+        } else {
+            dispatch({
+                type: REGISTER_FAIL,
+            });
+        }
+    } catch (error) {
+        dispatch({
+            type: REGISTER_FAIL,
         });
     }
 };

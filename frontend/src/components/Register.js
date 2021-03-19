@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { Button, Typography, TextField, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { register } from "../actions/auth";
 import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
@@ -17,52 +18,20 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Register = ({ isAuthenticated }) => {
+const Register = ({ register, isAuthenticated }) => {
     const [email, setEmail] = useState("");
     const [firstName, setFistName] = useState("");
     const [lastName, setLastName] = useState("");
     const [password, setPassword] = useState("");
     const [password2, setPassword2] = useState("");
+    const history = useHistory();
     const classe = useStyles();
-
-    const register = async () => {
-        // FIXME: Seulement pour test, remplacer les console.log et alert par de la logique et des messages pour l'utilisateur sur le site, redirect l'utilisateur
-        // TODO: Remplacer le base url par une variable dans .env
-        const url = "http://localhost:8000/auth/users/";
-        const body = {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                email,
-                first_name: firstName,
-                last_name: lastName,
-                password,
-                re_password: password2,
-            }),
-        };
-
-        try {
-            const res = await fetch(url, body);
-            const res_json = await res.json();
-
-            if (res.ok) {
-                alert("Le compte a été créé, vérifiez votre email");
-            } else {
-                // FIXME: Très hacky
-                alert(
-                    `Il y a eu un problème: ${JSON.stringify(await res_json)}`
-                );
-            }
-        } catch (error) {
-            console.log("Error during fetch");
-        }
-    };
 
     function onSubmit(event) {
         event.preventDefault();
-        register();
+        register(email, firstName, lastName, password, password2);
+        // TODO: Eventuellement afficher des messages de succes ou d'erreur et rediriger seulement en cas de succes
+        history.push("/login"); // Redirige vers /login
     }
 
     if (isAuthenticated) {
@@ -154,4 +123,4 @@ const mapStateToProps = (state) => ({
     isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, {})(Register);
+export default connect(mapStateToProps, { register })(Register);

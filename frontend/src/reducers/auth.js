@@ -6,6 +6,8 @@ import {
     AUTHENTICATED_SUCCESS,
     AUTHENTICATED_FAIL,
     LOGOUT,
+    REGISTER_SUCCESS,
+    REGISTER_FAIL,
     VERIFY_SUCCESS,
     VERIFY_FAIL,
 } from "../actions/types";
@@ -62,7 +64,10 @@ export default function reducer(state = initialState, action) {
                 ...state,
                 isAuthenticated: false,
             };
-        case VERIFY_SUCCESS: // TODO: Implementer d'autres states, peut-etre ajouter des messages pour l'utilisateur
+        // TODO: Implementer d'autres states, peut-etre ajouter des messages pour l'utilisateur au lieu de ne rien faire avec ces types d'actions
+        case REGISTER_SUCCESS:
+        case REGISTER_FAIL:
+        case VERIFY_SUCCESS:
         case VERIFY_FAIL:
         default:
             return state;
