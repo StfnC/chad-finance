@@ -2,26 +2,16 @@ from .models import UserAccount, Portfolio, Trade
 from .serializers import PortfolioSerializer, TradeSerializer
 from .permissions import IsFromUser
 from rest_framework import generics
+from rest_framework.views import APIView
 from rest_framework.response import Response
 
 
-# portfolio views
+# Portfolio views
 
-class PortfolioRetrieveAPIView(generics.RetrieveUpdateDestroyAPIView):
+class PortfolioAPIView(APIView):
     """
-    Vue qui permet de récuperer l'information sur un portfolio
+    Vue qui renvoie le portfolio de l'utilisateur
     """
-    permission_classes = (IsFromUser,)
-    queryset = Portfolio.objects.all()
-    serializer_class = PortfolioSerializer
-
-
-class PortfolioCreateAPIView(generics.CreateAPIView):
-    """
-    Vue qui permet de creer un portfolio
-    """
-    queryset = Portfolio.objects.all()
-    serializer_class = PortfolioSerializer
 
     def get(self, request):
         """
@@ -31,8 +21,8 @@ class PortfolioCreateAPIView(generics.CreateAPIView):
             Portfolio.objects.get(owner=request.user)).data
         return Response(portfolio)
 
-# trade views
 
+# Trade views
 
 class TradeRetrieveAPIView(generics.RetrieveUpdateDestroyAPIView):
     """

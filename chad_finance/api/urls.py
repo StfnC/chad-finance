@@ -1,12 +1,9 @@
 from django.urls import path
-from .views import PortfolioCreateAPIView, PortfolioRetrieveAPIView, TradeCreateAPIView, TradeListAPIView, TradeRetrieveAPIView, DeleteAccountView
+from .views import PortfolioAPIView, PortfolioRetrieveAPIView, TradeCreateAPIView, TradeListAPIView, TradeRetrieveAPIView, DeleteAccountView
 
 urlpatterns = [
-
     # Portfolio urls
-
-    path('portfolio/<int:pk>', PortfolioRetrieveAPIView.as_view()),
-    path('portfolio/', PortfolioCreateAPIView.as_view()),
+    path('portfolio/', PortfolioAPIView.as_view()),
 
     # Trade urls
 
