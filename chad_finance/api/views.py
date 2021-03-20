@@ -3,8 +3,6 @@ from .serializers import PortfolioSerializer, TradeSerializer
 from .permissions import IsFromUser
 from rest_framework import generics
 from rest_framework.response import Response
-from django.contrib.auth.models import User
-from django.shortcuts import render
 
 
 # portfolio views
@@ -25,8 +23,16 @@ class PortfolioCreateAPIView(generics.CreateAPIView):
     queryset = Portfolio.objects.all()
     serializer_class = PortfolioSerializer
 
+    def get(self, request):
+        """
+        Cette methode renvoie le portfolio de l'utilisateur quand une requete GET est faite
+        """
+        portfolio = PortfolioSerializer(
+            Portfolio.objects.get(owner=request.user)).data
+        return Response(portfolio)
 
 # trade views
+
 
 class TradeRetrieveAPIView(generics.RetrieveUpdateDestroyAPIView):
     """
