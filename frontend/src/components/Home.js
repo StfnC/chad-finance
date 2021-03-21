@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router";
+import Chart from "./Chart";
 
 const Home = ({ isAuthenticated }) => {
     const [name, setName] = useState("");
@@ -33,9 +34,24 @@ const Home = ({ isAuthenticated }) => {
         return <Redirect to="/login" />;
     }
 
+    // TODO: Recuperer les donnees du portfolio dans ce format
+    const chartData = [
+        { time: '2019-04-11', value: 80.01 },
+        { time: '2019-04-12', value: 96.63 },
+        { time: '2019-04-13', value: 76.64 },
+        { time: '2019-04-14', value: 81.89 },
+        { time: '2019-04-15', value: 74.43 },
+        { time: '2019-04-16', value: 80.01 },
+        { time: '2019-04-17', value: 96.63 },
+        { time: '2019-04-18', value: 76.64 },
+        { time: '2019-04-19', value: 81.89 },
+        { time: '2019-04-20', value: 74.43 },
+    ]
+
     return (
         <div>
             <h1>Hello, {name}</h1>
+            <Chart data={chartData}></Chart>
         </div>
     );
 };
