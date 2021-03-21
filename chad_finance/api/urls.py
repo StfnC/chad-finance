@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import PortfolioAPIView, PortfolioRetrieveAPIView, TradeCreateAPIView, TradeListAPIView, TradeRetrieveAPIView, DeleteAccountView
+from .views import PortfolioAPIView, TradeCreateAPIView, TradeListAPIView, TradeRetrieveAPIView, DeleteAccountView
 
 urlpatterns = [
     # Portfolio urls
