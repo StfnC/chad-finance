@@ -10,10 +10,18 @@ admin.site.site_title = "Chad Finance"
 admin.site.index_title = "Chad Finance"
 
 
+def set_active(modeladmin, request, queryset):
+    queryset.update(is_active=True)
+
+
+set_active.short_description = "Mark selected users as active"
+
+
 class UserAdmin(BaseUserAdmin):
     # Forms to add and change user instances
     form = UserAccountChangeForm
     add_form = UserAccountCreationForm
+    actions = [set_active]
 
     list_display = ("email", "first_name", "last_name", "is_active")
     list_filter = ("is_active", "is_staff")
