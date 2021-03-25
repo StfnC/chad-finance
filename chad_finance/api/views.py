@@ -1,3 +1,4 @@
+import json
 from .models import UserAccount, Portfolio, Trade
 from .serializers import PortfolioSerializer, TradeSerializer
 from .permissions import IsFromUser
@@ -5,8 +6,23 @@ from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-
 # Portfolio views
+
+
+class PortfolioChartDataView(APIView):
+    """
+    Vue qui permet de recuperer les donnees pour afficher la valeur du portfolio dans le temps
+    """
+
+    def get(self, request):
+        """
+        Renvoie les donnees du portfolio en format JSON
+        """
+        portfolio_data = Portfolio.objects.get(
+            owner=request.user).get_portfolio_data_daily()
+
+        return Response(data=json.dumps(portfolio_data))
+
 
 class PortfolioAPIView(APIView):
     """

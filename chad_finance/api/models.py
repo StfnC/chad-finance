@@ -124,6 +124,7 @@ class Portfolio(models.Model):
                 values[date] += float(data[date]['4. close']) * \
                     float(trade.quantity)
 
+        # TODO: Arrondir les montants
         # On enleve les journees ou la valeur du portfolio est zero
         for key, value in list(values.items()):
             if value == 0:

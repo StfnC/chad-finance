@@ -5,6 +5,19 @@ import Chart from "./Chart";
 
 const Home = ({ isAuthenticated }) => {
     const [name, setName] = useState("");
+    // TODO: Recuperer les donnees du portfolio dans ce format
+    const [chartData, setChartData] = useState([
+        { time: "2019-04-11", value: 80.01 },
+        { time: "2019-04-12", value: 96.63 },
+        { time: "2019-04-13", value: 76.64 },
+        { time: "2019-04-14", value: 81.89 },
+        { time: "2019-04-15", value: 74.43 },
+        { time: "2019-04-16", value: 80.01 },
+        { time: "2019-04-17", value: 96.63 },
+        { time: "2019-04-18", value: 76.64 },
+        { time: "2019-04-19", value: 81.89 },
+        { time: "2019-04-20", value: 74.43 },
+    ]);
 
     // Fonction permettant de récuperer le nom de l'utilisateur
     const initName = async () => {
@@ -26,27 +39,52 @@ const Home = ({ isAuthenticated }) => {
         }
     };
 
+    const initChartData = async () => {
+        // Permet de recuperer les donnees pour construire le graphique
+        try {
+            const url = "http://localhost:8000/api/portfolio/data/";
+            const body = {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `JWT ${localStorage.getItem("access")}`,
+                    Accept: "application/json",
+                },
+            };
+            const res = await fetch(url, body);
+            // On retourne la reponse sous format JSON
+            const res_json = JSON.parse(await res.json());
+            const formattedData = formatChartData(res_json);
+            setChartData(formattedData);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const formatChartData = (initialData) => {
+        // Cette fonction mets les donnees du portfolio dans le format que la librairie pour les graphiques en a besoin
+        /*
+        Exemple de donnees:
+        const data = [
+            { time: '2019-04-11', value: 80.01 },
+            { time: '2019-04-12', value: 96.63 },
+        ]
+        */
+        let data = [];
+        Object.keys(initialData).forEach((date) => {
+            data.push({ time: date, value: initialData[date] });
+        });
+        return data;
+    };
+
     useEffect(() => {
         initName();
+        initChartData();
     }, []);
 
     if (!isAuthenticated) {
         return <Redirect to="/login" />;
     }
-
-    // TODO: Recuperer les donnees du portfolio dans ce format
-    const chartData = [
-        { time: '2019-04-11', value: 80.01 },
-        { time: '2019-04-12', value: 96.63 },
-        { time: '2019-04-13', value: 76.64 },
-        { time: '2019-04-14', value: 81.89 },
-        { time: '2019-04-15', value: 74.43 },
-        { time: '2019-04-16', value: 80.01 },
-        { time: '2019-04-17', value: 96.63 },
-        { time: '2019-04-18', value: 76.64 },
-        { time: '2019-04-19', value: 81.89 },
-        { time: '2019-04-20', value: 74.43 },
-    ]
 
     return (
         <div>
