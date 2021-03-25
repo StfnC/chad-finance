@@ -1,9 +1,38 @@
+import datetime
+
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from .managers import UserAccountManager
 from django.conf import settings
-from datetime import date
 from alpha_vantage.timeseries import TimeSeries
+
+
+def get_data_from_date_window(data, start_date):
+    """
+    Nettoie un dictionnaire pour obtenir seulement les donnees a partir d'une certaine date
+
+    Args:
+        data (dict): Dictionnaire contenant les donnees provenant de l'api
+        start_date (string): Date de debut
+        end_date (string): Date de fin
+
+    Returns:
+        dict: Dictionnaire qui contient les valeurs de la periode voulue
+    """
+    # TODO: Handle les cas lorsque le end_date n'est pas dans les donnees
+    # Liste ordonnees des dates contenues dans les donnees
+    key_list = list(data.keys())
+    end_date_index = 0
+    start_date_index = key_list.index(start_date)
+
+    # On recupere les dates qui se trouvent entre les deux dates
+    sub_keys = [key_list[x]
+                for x in range(end_date_index, start_date_index + 1)]
+
+    # On construit un nouveau dictionnaire avec les dates qui nous interessent
+    data_range = {key: data[key] for key in sub_keys}
+
+    return data_range
 
 
 class UserAccount(AbstractBaseUser, PermissionsMixin):
@@ -44,11 +73,14 @@ class Trade(models.Model):
         max_digits=50, decimal_places=2, blank=False)
 
     def get_daily_price(self):
+        """
+        Retourner la valeur du trade a chaque jour entre le moment de son achat et la journee la plus recente disponible
+        """
         API_KEY = str(settings.ALPHA_VANTAGE_KEY)
         ts = TimeSeries(key=API_KEY)
         data, metadata = ts.get_daily_adjusted(
             symbol=self.symbol, outputsize="compact")
-        return data
+        return get_data_from_date_window(data, str(self.buy_date.date()))
 
     def __str__(self):
         return f"Symbol: {self.symbol} from {self.portfolio}"
@@ -70,9 +102,34 @@ class Portfolio(models.Model):
         for trade in trades:
             data = trade.get_daily_price()
             total_value = total_value + \
-                float(data[str(date.today())]['4. close']) * \
+                float(data[str(datetime.date.today())]['4. close']) * \
                 float(trade.quantity)
         return total_value
+
+    def get_portfolio_data_daily(self):
+        """
+        Retourne un dictionnaire qui contient les donnees necessaires pour construire un graphique de la valeur du portfolio en fonction du temps
+        """
+        # On cree une liste de journees entre aujourd'hui et le moment de la creation du portfolio
+        dates = [self.creation_date + datetime.timedelta(n) for n in range(
+            int((datetime.date.today() - self.creation_date).days) + 1)]
+        # On cree un dictionnaire ayant pour cle les dates et qui ont comme valeur initiale zero
+        values = {str(date): 0 for date in dates}
+
+        for trade in self.trade_set.all():
+            # On recupere les donnees de chaque trade
+            data = trade.get_daily_price()
+            for date in data:
+                # On ajoute la valeur du trade a chaque jour
+                values[date] += float(data[date]['4. close']) * \
+                    float(trade.quantity)
+
+        # On enleve les journees ou la valeur du portfolio est zero
+        for key, value in list(values.items()):
+            if value == 0:
+                del values[key]
+
+        return values
 
     def modify_amount(self, new_value):
         self.current_amount = new_value
