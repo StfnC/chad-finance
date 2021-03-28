@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router";
 import Chart from "./Chart";
 
+
 const Home = ({ isAuthenticated }) => {
     const [name, setName] = useState("");
     // TODO: Recuperer les donnees du portfolio dans ce format
