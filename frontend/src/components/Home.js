@@ -79,6 +79,7 @@ const Home = ({ isAuthenticated }) => {
 
     useEffect(() => {
         initName();
+        // TODO: Figure out why the chart doesn't update
         initChartData();
     }, []);
 
@@ -89,7 +90,7 @@ const Home = ({ isAuthenticated }) => {
     return (
         <div>
             <h1>Hello, {name}</h1>
-            <Chart data={chartData}></Chart>
+            <Chart key={chartData.toString()} data={chartData}></Chart>
         </div>
     );
 };
