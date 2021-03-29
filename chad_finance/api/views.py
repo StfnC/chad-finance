@@ -5,6 +5,11 @@ from .permissions import IsFromUser
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from alpha_vantage.timeseries import TimeSeries
+from django.conf import settings
+
+# Objet TimeSeries qui permet de faire des requetes a l'api TimeSeries de Alpha Vantage
+ts = TimeSeries(key=str(settings.ALPHA_VANTAGE_KEY))
 
 # Portfolio views
 
@@ -82,3 +87,21 @@ class DeleteAccountView(generics.DestroyAPIView):
         # TODO: Donner une autre réponse peut-être
         UserAccount.objects.get(pk=request.user.pk).delete()
         return Response({"user": "User has been deleted"})
+
+
+class SearchSymbolView(APIView):
+    """
+    Vue qui permet de chercher un symbole
+    """
+
+    def post(self, request):
+        """
+        Retourner les actions associees au symbole recherche
+        """
+        data, meta = ts.get_symbol_search(keywords=request.data["keywords"])
+        # Un bug dans le package alpha_vantage fait en sorte qu'on ne recoit pas les donnees en format json
+        # Il faut passer d'un pandas DataFrame a JSON
+        parsed = json.loads(data.to_json(orient="index"))
+        formatted = list(parsed.values())
+
+        return Response(data=json.dumps(formatted))

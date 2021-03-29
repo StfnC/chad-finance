@@ -23,10 +23,13 @@ itypes==1.2.0
 Jinja2==2.11.3
 MarkupSafe==1.1.1
 multidict==5.1.0
+numpy==1.20.2
 oauthlib==3.1.0
+pandas==1.2.3
 pycodestyle==2.6.0
 pycparser==2.20
 PyJWT==2.0.1
+python-dateutil==2.8.1
 python3-openid==3.2.0
 pytz==2021.1
 requests==2.25.1
