@@ -7,6 +7,7 @@ import { logout } from "../actions/auth";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
+import { Fragment } from "react";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -38,14 +39,17 @@ const Navbar = ({ logout, isAuthenticated }) => {
 
     const userLinks = () => {
         return (
-            <Button
-                color="secondary"
-                variant="contained"
-                to="/login"
-                onClick={logout}
-            >
-                Logout
-            </Button>
+            <Fragment>
+                <SearchBar />
+                <Button
+                    color="secondary"
+                    variant="contained"
+                    to="/login"
+                    onClick={logout}
+                >
+                    Logout
+                </Button>
+            </Fragment>
         );
     };
 
@@ -61,7 +65,6 @@ const Navbar = ({ logout, isAuthenticated }) => {
                     >
                         Chad Finance
                     </IconButton>
-                    <SearchBar></SearchBar>
                     {/* Remplace des if else (opérateur ternaire) */}
                     {isAuthenticated ? userLinks() : anonymLinks()}
                 </Toolbar>

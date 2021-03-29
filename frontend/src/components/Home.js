@@ -3,9 +3,9 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router";
 import Chart from "./Chart";
 
-
 const Home = ({ isAuthenticated }) => {
     const [name, setName] = useState("");
+    const[value, setValue] = useState();
     // TODO: Recuperer les donnees du portfolio dans ce format
     const [chartData, setChartData] = useState([
         { time: "2019-04-11", value: 80.01 },
@@ -35,6 +35,29 @@ const Home = ({ isAuthenticated }) => {
             const res = await fetch(url, body);
             const res_json = await res.json();
             setName(res_json.first_name);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const initValue = async () =>{
+        
+        try {
+            const url = "http://localhost:8000/api/portfolio";
+            const body = {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `JWT ${localStorage.getItem("access")}`,
+                    Accept: "application/json",
+                },
+            };
+            const res = await fetch(url, body);
+            const res_json = await res.json();
+            setValue(res_json.value)
+            console.log(value);
+
+            
         } catch (error) {
             console.log(error);
         }
@@ -82,6 +105,7 @@ const Home = ({ isAuthenticated }) => {
         initName();
         // TODO: Figure out why the chart doesn't update
         initChartData();
+        initValue();
     }, []);
 
     if (!isAuthenticated) {
@@ -90,7 +114,7 @@ const Home = ({ isAuthenticated }) => {
 
     return (
         <div>
-            <h1>Hello, {name}</h1>
+            <h1>Bon matin, {name} votre valeur est de {value} </h1>
             <Chart key={chartData.toString()} data={chartData}></Chart>
         </div>
     );
