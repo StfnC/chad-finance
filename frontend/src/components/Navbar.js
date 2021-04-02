@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import { makeStyles, Button } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -7,6 +7,7 @@ import { logout } from "../actions/auth";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
+import About from "./About";
 import { Fragment } from "react";
 
 const useStyles = makeStyles((theme) => ({
@@ -41,14 +42,7 @@ const Navbar = ({ logout, isAuthenticated }) => {
         return (
             <Fragment>
                 <SearchBar />
-                <Button
-                    color="secondary"
-                    variant="contained"
-                    to="/login"
-                    onClick={logout}
-                >
-                    Logout
-                </Button>
+                <About />               
             </Fragment>
         );
     };

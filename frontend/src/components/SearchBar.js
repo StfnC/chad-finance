@@ -43,41 +43,21 @@ const usesStyles = makeStyles((theme) => ({
             width: '20ch',
         },
     },
+    position : {
+        margin : 19,
+    }
 
 }));
 
-function getStockName(){
-    fetch("/api/stock-tags").then((response) => {
-        if(!response.ok){
-            return{};
-        }else {
-            return response.json();
-        }
-    })
-    .then((data) => {
-    })
-}
-
-function getInput() {
-    let input = "";
-    if (document.getElementById("searchBar") != null) {
-        document.getElementById("searchBar").addEventListener("keypress", function (e) {
-            if (e.key === "Enter") {
-                input = document.getElementById("searchBar").value;
-                //fetchData();
-                console.log(input);
-            }
-        });
-    }
-}
-
-
-
+// TODO : Faire en sorte que lorsqu'on clique sur la loupe la fonction getStockName se fait appeler. Rajouer un event listener dessus.
 const SearchBar = ({ }) => {
+    // component qui affiche une barre de recherche dans la Navbar
     const classes = usesStyles();
     const [input, setInput] = useState("");
 
     function getStockName(input){
+        // fonction pour donner au backend ce que l'utilisateur a demandé dans la search bar. Input = Stock abb ou name 
+
         const body = {
             method: "GET",
             headers: {
@@ -125,7 +105,7 @@ const SearchBar = ({ }) => {
 
     return (
         <div>
-            <Toolbar>
+            <Toolbar className = {classes.position}>
                 <div className={classes.search}>
                     <div className={classes.searchIcon}>
                         <SearchIcon   />
