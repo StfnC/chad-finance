@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import PortfolioAPIView, TradeCreateAPIView, TradeListAPIView, TradeRetrieveAPIView, DeleteAccountView, PortfolioChartDataView, SearchSymbolView
+from .views import *
 
 urlpatterns = [
     # Portfolio urls
@@ -16,4 +16,5 @@ urlpatterns = [
 
     # Autres
     path('search/', SearchSymbolView.as_view()),
+    path('symbol/', SymbolInfoView.as_view()),
 ]

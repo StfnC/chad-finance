@@ -6,10 +6,12 @@ from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from alpha_vantage.timeseries import TimeSeries
+from alpha_vantage.fundamentaldata import FundamentalData
 from django.conf import settings
 
 # Objet TimeSeries qui permet de faire des requetes a l'api TimeSeries de Alpha Vantage
 ts = TimeSeries(key=str(settings.ALPHA_VANTAGE_KEY))
+fd = FundamentalData(key=str(settings.ALPHA_VANTAGE_KEY))
 
 # Portfolio views
 
@@ -105,3 +107,36 @@ class SearchSymbolView(APIView):
         formatted = list(parsed.values())
 
         return Response(data=json.dumps(formatted))
+
+
+class SymbolInfoView(APIView):
+    """
+    Vue permettant d'obtenir l'information sur une action specifique
+    """
+
+    def format_chart_data(self, dates, values):
+        """
+        Retourne les valeurs dans le format que le graphique en a besoin
+        Cette fonction s'utilise beaucoup mieux avec un map()
+        """
+        val = dict()
+        # On ajoute le temps dans les donnees et on renome les cles associees pour avoir le bon format
+        val["time"] = dates
+        val["open"] = values["1. open"]
+        val["high"] = values["2. high"]
+        val["low"] = values["3. low"]
+        val["close"] = values["4. close"]
+        return val
+
+    def post(self, request):
+        """
+        Retourne l'information sur la compagnie associee a un symbol ansi que les donnees pour construire un graphique de la valeur de la compagnie
+        """
+        symbol = request.data["symbol"]
+        data, meta = ts.get_daily_adjusted(symbol=symbol)
+        company_data = fd.get_company_overview(symbol=symbol)
+        keys = list(data.keys())
+        values = list(data.values())
+        # Cette ligne permet d'utiliser la fonction map pour formatter les donnees efficacement
+        formatted = list(map(self.format_chart_data, keys, values))
+        return Response(data=json.dumps({"info": company_data, "chart_data": formatted}))
