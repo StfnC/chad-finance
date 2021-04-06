@@ -5,7 +5,7 @@ import Chart from "./Chart";
 
 const Home = ({ isAuthenticated }) => {
     const [name, setName] = useState("");
-    const[value, setValue] = useState();
+    const [value, setValue] = useState();
     // TODO: Recuperer les donnees du portfolio dans ce format
     const [chartData, setChartData] = useState([
         { time: "2019-04-11", value: 80.01 },
@@ -40,8 +40,8 @@ const Home = ({ isAuthenticated }) => {
         }
     };
 
-    const initValue = async () =>{
-        
+    const initValue = async () => {
+
         try {
             const url = "http://localhost:8000/api/portfolio";
             const body = {
@@ -57,7 +57,7 @@ const Home = ({ isAuthenticated }) => {
             setValue(res_json.value)
             console.log(value);
 
-            
+
         } catch (error) {
             console.log(error);
         }
@@ -73,12 +73,13 @@ const Home = ({ isAuthenticated }) => {
                     "Content-Type": "application/json",
                     Authorization: `JWT ${localStorage.getItem("access")}`,
                     Accept: "application/json",
-                },               
+                },
             };
             const res = await fetch(url, body);
             // On retourne la reponse sous format JSON
             const res_json = JSON.parse(await res.json());
             const formattedData = formatChartData(res_json);
+            console.log(formattedData);
             setChartData(formattedData);
         } catch (error) {
             console.log(error);

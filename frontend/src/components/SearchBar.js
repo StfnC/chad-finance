@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import AppBar from '@material-ui/core/AppBar';
 import SearchIcon from '@material-ui/icons/Search';
-import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
-import { makeStyles, Toolbar, fade } from '@material-ui/core';
+import { makeStyles, Toolbar, fade, InputBase, Typography, TextField } from '@material-ui/core';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+
+
 
 const usesStyles = makeStyles((theme) => ({
     search: {
@@ -43,8 +43,8 @@ const usesStyles = makeStyles((theme) => ({
             width: '20ch',
         },
     },
-    position : {
-        margin : 19,
+    position: {
+        margin: 19,
     }
 
 }));
@@ -54,63 +54,74 @@ const SearchBar = ({ }) => {
     // component qui affiche une barre de recherche dans la Navbar
     const classes = usesStyles();
     const [input, setInput] = useState("");
+    const [data, setData] = useState([]);
+    const [test, setTest] = useState("");
 
-    function getStockName(input){
-        // fonction pour donner au backend ce que l'utilisateur a demandé dans la search bar. Input = Stock abb ou name 
 
-        const body = {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `JWT ${localStorage.getItem("access")}`,
-                Accept: "application/json",
-            },
-            data : {
-                "keywords": input
-            },
-            body: JSON.stringify({input}),
-        };
-        fetch("http://localhost:8000/api/search/", body).then((response) => {
-            if(!response.ok){
-                return {};
-            }else {
-                return response.json();
-            }
-        })
-        .then((data) => {
-           // return data.json();
-        })
-    }
-    
-    function getInput() {
-        
-        if (document.getElementById("searchBar") != null) {
-            document.getElementById("searchBar").addEventListener("keypress", function (e) {
-                if (e.key === "Enter") {
-                    setInput(document.getElementById("searchBar").value);
-                    //getStockName(input);
-                    console.log(input);
-                }
-            });
+    const fetchData = async () => {
+
+        try {
+            const url = "http://localhost:8000/api/search/";
+            console.log(input + " bizz")
+            const body = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `JWT ${localStorage.getItem("access")}`,
+                    Accept: "application/json",
+                },
+                data: JSON.stringify({
+                    "keywords": input,
+                }),
+            };
+
+            const res = await fetch(url, body);
+            const json = await res.json();
+            console.log(json);
+            setData(json);
+        } catch (e) {
+            console.log(e);
         }
-        return input;
+
     }
-    
+
+
+
 
     useEffect(() => {
         getInput();
-        return () => {
-            
+    }, [input]);
+
+    function getInput() {
+        console.log(input + " before enter");
+        /* if (document.getElementById("searchBar") != null) {
+            document.getElementById("searchBar").addEventListener("keypress", function (e) {
+                if (e.key === "Enter") {
+                  
+                  fetchData();
+                }
+            })
+        } */
+        if (input.length > 0) {
+            console.log(input);
+            fetchData();
         }
-    }, [input])
+    }
+    const handleChange = (event) => {
+        event.preventDefault();
+        setInput(event.target.value);
+
+    };
+
 
     return (
         <div>
-            <Toolbar className = {classes.position}>
+            <Toolbar className={classes.position}>
                 <div className={classes.search}>
                     <div className={classes.searchIcon}>
-                        <SearchIcon   />
+                        <SearchIcon />
                     </div>
+
                     <InputBase
                         placeholder="Search…"
                         classes={{
@@ -118,16 +129,51 @@ const SearchBar = ({ }) => {
                             input: classes.inputInput,
                         }}
                         id="searchBar"
-                        onRequestSearch = {getInput()}
+                        onInput={(e) => setInput(e.target.value)}
+                        onChange={handleChange}
+                        value={input}
                         inputProps={{ 'aria-label': 'Rechercher' }}
                     />
+
                 </div>
 
             </Toolbar>
+            {input}
 
-            <h1 color="black"> {input} </h1>
         </div>
     );
 }
 
 export default SearchBar;
+
+/* function getStockName() {
+
+       // fonction pour donner au backend ce que l'utilisateur a demandé dans la search bar. Input = Stock abb ou name
+       const body = {
+           method: "POST",
+           headers: {
+               "Content-Type": "application/json",
+               Authorization: `JWT ${localStorage.getItem("access")}`,
+               Accept: "application/json",
+           },
+           data: JSON.stringify({
+               "keywords": "TSLA",
+           }),
+       };
+
+       fetch("http://localhost:8000/api/search/", body).then((response) => {
+           if (!response.ok) {
+               console.log(response.json());
+               return {};
+
+           } else {
+               console.log(response.json());
+               return response.json();
+           }
+       })
+           .then((data) => {
+               setData(response.json())
+               setResult(response.json().slice())
+           })
+
+   }*/
