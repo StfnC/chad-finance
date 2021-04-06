@@ -73,7 +73,7 @@ const Home = ({ isAuthenticated }) => {
                     "Content-Type": "application/json",
                     Authorization: `JWT ${localStorage.getItem("access")}`,
                     Accept: "application/json",
-                },
+                },               
             };
             const res = await fetch(url, body);
             // On retourne la reponse sous format JSON

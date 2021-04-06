@@ -67,7 +67,8 @@ const SearchBar = ({ }) => {
             },
             data : {
                 "keywords": input
-            }
+            },
+            body: JSON.stringify({input}),
         };
         fetch("http://localhost:8000/api/search/", body).then((response) => {
             if(!response.ok){

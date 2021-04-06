@@ -100,9 +100,10 @@ class Portfolio(models.Model):
         trades = self.trade_set.all()
         total_value = 0.0
         for trade in trades:
-            data = trade.get_daily_price()
+            #prendre la première value dans le json de données
+            data = list(trade.get_daily_price().values())[0]
             total_value = total_value + \
-                float(data[str(datetime.date.today())]['4. close']) * \
+                float(data['4. close']) * \
                 float(trade.quantity)
         return total_value
 
