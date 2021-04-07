@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
-import { makeStyles, Toolbar, fade, InputBase, Typography, TextField } from '@material-ui/core';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import { makeStyles, Toolbar, fade, InputBase, Typography, TextField, ListItem, Grid, Menu } from '@material-ui/core';
+import { Link } from 'react-router-dom';
+
 
 
 
@@ -54,15 +55,16 @@ const SearchBar = ({ }) => {
     // component qui affiche une barre de recherche dans la Navbar
     const classes = usesStyles();
     const [input, setInput] = useState("");
-    const [data, setData] = useState([]);
-    const [test, setTest] = useState("");
+    const [data, setData] = useState({});
+    const [symbol, setSymbol] = useState([]);
+    let listSymbol = [];
 
 
     const fetchData = async () => {
 
         try {
             const url = "http://localhost:8000/api/search/";
-            console.log(input + " bizz")
+            setSymbol([]);
             const body = {
                 method: "POST",
                 headers: {
@@ -70,30 +72,44 @@ const SearchBar = ({ }) => {
                     Authorization: `JWT ${localStorage.getItem("access")}`,
                     Accept: "application/json",
                 },
-                data: JSON.stringify({
+                body: JSON.stringify({
                     "keywords": input,
                 }),
             };
 
             const res = await fetch(url, body);
-            const json = await res.json();
-            console.log(json);
-            setData(json);
+            let json = await res.json();
+            json = JSON.parse(json);
+            let i = 0;
+            for (i in json) {
+                
+                listSymbol.push(json[i]["1. symbol"]);
+                 setSymbol((symbol) => [
+                    ...symbol,
+                    json[i]["1. symbol"],
+                ]); 
+                
+            }
+           console.log(listSymbol);
+
         } catch (e) {
             console.log(e);
         }
+        
 
     }
 
 
-
-
     useEffect(() => {
         getInput();
+       // listSymbol = [];
+       
     }, [input]);
 
+   
+
     function getInput() {
-        console.log(input + " before enter");
+
         /* if (document.getElementById("searchBar") != null) {
             document.getElementById("searchBar").addEventListener("keypress", function (e) {
                 if (e.key === "Enter") {
@@ -103,8 +119,9 @@ const SearchBar = ({ }) => {
             })
         } */
         if (input.length > 0) {
-            console.log(input);
-            fetchData();
+            fetchData();        
+        }else{
+            setSymbol([]);
         }
     }
     const handleChange = (event) => {
@@ -135,10 +152,34 @@ const SearchBar = ({ }) => {
                         inputProps={{ 'aria-label': 'Rechercher' }}
                     />
 
+
                 </div>
 
             </Toolbar>
-            {input}
+               <div>   
+               
+                {symbol.map((symbol) => (
+                   
+                    <Link
+                        variant = "contained"
+                        key={symbol}                       
+                        to={`/symbol/${symbol}`}
+                    >
+                        {symbol},  
+                       
+                    </Link>
+                   
+                    
+                    
+                ))}
+               
+              </div> 
+              <div>
+                  <Menu>
+
+                  </Menu>
+              </div>
+            
 
         </div>
     );

@@ -107,6 +107,5 @@ class SearchSymbolView(APIView):
         # Il faut passer d'un pandas DataFrame a JSON
         parsed = json.loads(data.to_json(orient="index"))
         formatted = list(parsed.values())
-        print(formatted)
-
+        
         return Response(data=json.dumps(formatted))
