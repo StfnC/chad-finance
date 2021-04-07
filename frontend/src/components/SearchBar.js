@@ -82,31 +82,31 @@ const SearchBar = ({ }) => {
             json = JSON.parse(json);
             let i = 0;
             for (i in json) {
-                
+
                 listSymbol.push(json[i]["1. symbol"]);
-                 setSymbol((symbol) => [
+                setSymbol((symbol) => [
                     ...symbol,
                     json[i]["1. symbol"],
-                ]); 
-                
+                ]);
+
             }
-           console.log(listSymbol);
+            console.log(listSymbol);
 
         } catch (e) {
             console.log(e);
         }
-        
+
 
     }
 
 
     useEffect(() => {
         getInput();
-       // listSymbol = [];
-       
+        // listSymbol = [];
+
     }, [input]);
 
-   
+
 
     function getInput() {
 
@@ -119,8 +119,8 @@ const SearchBar = ({ }) => {
             })
         } */
         if (input.length > 0) {
-            fetchData();        
-        }else{
+            fetchData();
+        } else {
             setSymbol([]);
         }
     }
@@ -156,31 +156,25 @@ const SearchBar = ({ }) => {
                 </div>
 
             </Toolbar>
-               <div>   
-               
+            <div>
+
                 {symbol.map((symbol) => (
-                   
+
                     <Link
-                        variant = "contained"
-                        key={symbol}                       
+                        variant="contained"
+                        key={symbol}
                         to={`/symbol/${symbol}`}
                     >
-                        {symbol},  
-                       
+                        {symbol},
+
                     </Link>
-                   
-                    
-                    
+
+
+
                 ))}
-               
-              </div> 
-              <div>
-                  <Menu>
 
-                  </Menu>
-              </div>
-            
-
+            </div>
+           
         </div>
     );
 }
