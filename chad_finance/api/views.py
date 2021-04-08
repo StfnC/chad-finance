@@ -100,7 +100,11 @@ class SearchSymbolView(APIView):
         """
         Retourner les actions associees au symbole recherche
         """
-        data, meta = ts.get_symbol_search(keywords=request.data["keywords"])
+        print(request.data)
+        keywords = request.data["keywords"]
+        print(keywords + "***************************************************")
+        data, meta = ts.get_symbol_search(keywords = keywords)
+        
         # Un bug dans le package alpha_vantage fait en sorte qu'on ne recoit pas les donnees en format json
         # Il faut passer d'un pandas DataFrame a JSON
         parsed = json.loads(data.to_json(orient="index"))
