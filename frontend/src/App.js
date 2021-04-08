@@ -5,8 +5,11 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Activate from "./components/Activate";
+import SymbolDetails from "./components/SymbolDetails";
 import { Provider } from "react-redux";
 import store from "./store";
+
+
 
 export default function App() {
     return (
@@ -22,6 +25,7 @@ export default function App() {
                             path="/activate/:uid/:token"
                             component={Activate}
                         />
+                        <Route exact path="/symbol/:symbol" component={SymbolDetails} />
                     </Switch>
                 </Layout>
             </Router>
