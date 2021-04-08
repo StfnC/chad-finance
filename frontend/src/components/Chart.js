@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { createChart } from "lightweight-charts";
 
-const Chart = ({ key, data }) => {
+const Chart = ({ key, data, chartType }) => {
     const chartRef = useRef(null);
 
     // Quand la page se charge, on initialise le graphique
@@ -10,8 +10,19 @@ const Chart = ({ key, data }) => {
             width: 800,
             height: 600,
         });
-        const lineSeries = chart.addLineSeries();
-        lineSeries.setData(data);
+
+        switch (chartType) {
+            default:
+                break;
+            case "line":
+                const lineSeries = chart.addLineSeries();
+                lineSeries.setData(data);
+                break;
+            case "candle":
+                const candleStickSeries = chart.addCandlestickSeries();
+                candleStickSeries.setData(data);
+                break;
+        }
 
         return () => {
             // On enleve le graphique une fois que l'utilisateur quitte la page ou la rafraichie

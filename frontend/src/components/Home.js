@@ -41,7 +41,6 @@ const Home = ({ isAuthenticated }) => {
     };
 
     const initValue = async () => {
-
         try {
             const url = "http://localhost:8000/api/portfolio";
             const body = {
@@ -54,10 +53,8 @@ const Home = ({ isAuthenticated }) => {
             };
             const res = await fetch(url, body);
             const res_json = await res.json();
-            setValue(res_json.value)
+            setValue(res_json.value);
             console.log(value);
-
-
         } catch (error) {
             console.log(error);
         }
@@ -115,8 +112,14 @@ const Home = ({ isAuthenticated }) => {
 
     return (
         <div>
-            <h1>Bon matin, {name} votre valeur est de {value} </h1>
-            <Chart key={chartData.toString()} data={chartData}></Chart>
+            <h1>
+                Bon matin, {name} votre valeur est de {value}{" "}
+            </h1>
+            <Chart
+                key={chartData.toString()}
+                data={chartData}
+                chartType="line"
+            />
         </div>
     );
 };

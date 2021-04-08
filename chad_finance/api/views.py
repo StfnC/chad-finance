@@ -100,11 +100,8 @@ class SearchSymbolView(APIView):
         """
         Retourner les actions associees au symbole recherche
         """
-        print(request.data)
         keywords = request.data["keywords"]
-        print(keywords + "***************************************************")
-        data, meta = ts.get_symbol_search(keywords = keywords)
-        
+        data, meta = ts.get_symbol_search(keywords=keywords)
         # Un bug dans le package alpha_vantage fait en sorte qu'on ne recoit pas les donnees en format json
         # Il faut passer d'un pandas DataFrame a JSON
         parsed = json.loads(data.to_json(orient="index"))
@@ -143,4 +140,6 @@ class SymbolInfoView(APIView):
         values = list(data.values())
         # Cette ligne permet d'utiliser la fonction map pour formatter les donnees efficacement
         formatted = list(map(self.format_chart_data, keys, values))
+        # On inverse l'ordre de la liste, car le graphique veut les dates en ordre croissant
+        formatted = formatted[::-1]
         return Response(data=json.dumps({"info": company_data, "chart_data": formatted}))

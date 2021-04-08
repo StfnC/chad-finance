@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { makeStyles, Button } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -42,7 +42,7 @@ const Navbar = ({ logout, isAuthenticated }) => {
         return (
             <Fragment>
                 <SearchBar />
-                <About />               
+                <About />
             </Fragment>
         );
     };

@@ -9,8 +9,6 @@ import SymbolDetails from "./components/SymbolDetails";
 import { Provider } from "react-redux";
 import store from "./store";
 
-
-
 export default function App() {
     return (
         <Provider store={store}>
@@ -25,7 +23,11 @@ export default function App() {
                             path="/activate/:uid/:token"
                             component={Activate}
                         />
-                        <Route exact path="/symbol/:symbol" component={SymbolDetails} />
+                        <Route
+                            exact
+                            path="/symbol/:symbol"
+                            component={SymbolDetails}
+                        />
                     </Switch>
                 </Layout>
             </Router>
