@@ -109,10 +109,6 @@ class SearchSymbolView(APIView):
         # Il faut passer d'un pandas DataFrame a JSON
         parsed = json.loads(data.to_json(orient="index"))
         formatted = list(parsed.values())
-<<<<<<< HEAD
-        
-        return Response(data=json.dumps(formatted))
-=======
 
         return Response(data=json.dumps(formatted))
 
@@ -148,4 +144,3 @@ class SymbolInfoView(APIView):
         # Cette ligne permet d'utiliser la fonction map pour formatter les donnees efficacement
         formatted = list(map(self.format_chart_data, keys, values))
         return Response(data=json.dumps({"info": company_data, "chart_data": formatted}))
->>>>>>> afc1d1d9986e866933ba716ca366739efc5c933b
