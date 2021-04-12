@@ -6,23 +6,11 @@ const minValue = 1;
 const maxValue = 99999999999999999999999999999999999999999999999999;
 
 const SymbolDetails = ({ match }) => {
-    const [chartData, setChartData] = useState([
-        {
-            time: "2018-12-19",
-            open: 141.77,
-            high: 170.39,
-            low: 120.25,
-            close: 145.72,
-        },
-        {
-            time: "2018-12-20",
-            open: 145.72,
-            high: 147.99,
-            low: 100.11,
-            close: 108.19,
-        },
-    ]);
 
+    const [chartData, setChartData] = useState([]);
+    
+    const [SymbolOverview, setSymbolOverview] = useState({}); 
+    
     const initSymbolInfo = async () => {
         // Permet de recuperer les donnees pour construire le graphique
         try {
@@ -42,6 +30,7 @@ const SymbolDetails = ({ match }) => {
             // On retourne la reponse sous format JSON
             const res_json = JSON.parse(await res.json());
             setChartData(res_json.chart_data);
+            setSymbolOverview(res_json.info);
         } catch (error) {
             console.log(error);
         }
@@ -53,7 +42,7 @@ const SymbolDetails = ({ match }) => {
 
     return (
         <div>
-            <h1>IBM</h1>
+            <h1>{SymbolOverview[0]["Name"]} ({SymbolOverview[0]["Symbol"]})</h1>
             <p>Description</p>
             <Chart
                 key={chartData.toString()}
