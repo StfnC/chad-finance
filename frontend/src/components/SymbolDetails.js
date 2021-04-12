@@ -36,7 +36,7 @@ const SymbolDetails = ({ match }) => {
 
     useEffect(() => {
         initSymbolInfo();
-    });
+    }, []);
 
     return (
         <div>
