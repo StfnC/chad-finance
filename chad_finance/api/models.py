@@ -79,7 +79,13 @@ class Trade(models.Model):
         ts = TimeSeries(key=API_KEY)
         data, metadata = ts.get_daily_adjusted(
             symbol=self.symbol, outputsize="compact")
-        return get_data_from_date_window(data, str(self.buy_date.date()))
+        try:
+            data = get_data_from_date_window(data, str(self.buy_date.date()))
+        except ValueError as ve:
+            # Cette erreur survient lorsqu'on essaie d'obtenir la valeur d'une action achetee le jour meme
+            # On renvoie alors les donnees au moment de l'achat
+            data = {str(self.buy_date.date()): {"4. close": self.buy_price}}
+        return data
 
     def __str__(self):
         return f"Symbol: {self.symbol} from {self.portfolio}"
@@ -99,7 +105,7 @@ class Portfolio(models.Model):
         trades = self.trade_set.all()
         total_value = 0.0
         for trade in trades:
-            #prendre la première value dans le json de données
+            # prendre la première value dans le json de données
             data = list(trade.get_daily_price().values())[0]
             total_value = total_value + \
                 float(data['4. close']) * \
