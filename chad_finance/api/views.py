@@ -10,6 +10,7 @@ from alpha_vantage.timeseries import TimeSeries
 from alpha_vantage.fundamentaldata import FundamentalData
 from django.conf import settings
 from django.core.exceptions import ValidationError
+from decimal import Decimal
 
 # Objet TimeSeries qui permet de faire des requetes a l'api TimeSeries de Alpha Vantage
 ts = TimeSeries(key=str(settings.ALPHA_VANTAGE_KEY))
@@ -67,6 +68,7 @@ class TradeCreateAPIView(APIView):
         """
         Cree un Trade pour un utilisateur
         """
+        # TODO: Ajouter validation pour s'assurer que l'utilisateur peut faire la transaction
         response_data = {"message": ""}
         trade_data = request.data
         user_portfolio = request.user.portfolio
@@ -79,13 +81,24 @@ class TradeCreateAPIView(APIView):
             trade = Trade(portfolio=user_portfolio,
                           buy_price=buy_price, **trade_data)
             trade.save()
-            # TODO: Deduce trade amount from portfolio available amount
+            # On deduit le montant de l'achat a la quantite de fonds disponibles
+            self.deduce_trade_amount(
+                user_portfolio, buy_price, float(trade_data["quantity"]))
             response_data["message"] = "Transaction effectuee avec succes"
         except ValidationError as ve:
             # On renvoie un message d'erreur dans la reponse
             response_data["message"] = "Erreur durant la transaction"
         finally:
             return Response(data=response_data)
+
+    def deduce_trade_amount(self, portfolio, buy_price, quantity):
+        """
+        Deduit le montant de la transaction de la quantite de fonds disponible pour faire des transactions
+        """
+        # Il faut cast le montant en Decimal pour avoir le meme type de donnees que dans la base de donnees
+        trade_amount = Decimal(buy_price * quantity)
+        portfolio.current_amount -= trade_amount
+        portfolio.save()
 
 
 class TradeListAPIView(generics.ListAPIView):
