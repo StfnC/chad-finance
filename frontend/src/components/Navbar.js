@@ -56,8 +56,8 @@ const Navbar = ({ logout, isAuthenticated }) => {
                         className={classes.logo}
                         color="inherit"
                         aria-label="home"
-                        component = {Link}
-                        to = "/"
+                        component={Link}
+                        to="/"
                     >
                         Chad Finance
                     </IconButton>

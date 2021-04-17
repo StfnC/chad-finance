@@ -14,7 +14,6 @@ def get_data_from_date_window(data, start_date):
     Args:
         data (dict): Dictionnaire contenant les donnees provenant de l'api
         start_date (string): Date de debut
-        end_date (string): Date de fin
 
     Returns:
         dict: Dictionnaire qui contient les valeurs de la periode voulue

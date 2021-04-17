@@ -50,7 +50,7 @@ const SymbolDetails = ({ match }) => {
                 chartType="candle"
             />
             {/* Company Overview */}
-            <Buy symbol = {symbolOverview["Symbol"]} />
+            <Buy symbol={symbolOverview["Symbol"]} />
         </div>
     );
 };

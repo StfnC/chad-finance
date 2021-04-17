@@ -113,7 +113,7 @@ const Home = ({ isAuthenticated }) => {
     return (
         <div>
             <h1>
-               Portfolio de: {name} <br/> Valeur : {value}{" "}
+                Portfolio de: {name} <br /> Valeur : {value}{" "}
             </h1>
             <Chart
                 key={chartData.toString()}

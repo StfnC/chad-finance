@@ -1,8 +1,7 @@
 import json
 
-from django.db.models.query import QuerySet
 from .models import UserAccount, Portfolio, Trade
-from .serializers import PortfolioSerializer, TradeSerializer
+from .serializers import PortfolioSerializer, TradeSerializerComplete
 from .permissions import IsFromUser
 from rest_framework import generics
 from rest_framework.views import APIView
@@ -10,6 +9,7 @@ from rest_framework.response import Response
 from alpha_vantage.timeseries import TimeSeries
 from alpha_vantage.fundamentaldata import FundamentalData
 from django.conf import settings
+from django.core.exceptions import ValidationError
 
 # Objet TimeSeries qui permet de faire des requetes a l'api TimeSeries de Alpha Vantage
 ts = TimeSeries(key=str(settings.ALPHA_VANTAGE_KEY))
@@ -55,15 +55,37 @@ class TradeRetrieveAPIView(generics.RetrieveUpdateDestroyAPIView):
     """
     permission_classes = (IsFromUser,)
     queryset = Trade.objects.all()
-    serializer_class = TradeSerializer
+    serializer_class = TradeSerializerComplete
 
 
-class TradeCreateAPIView(generics.CreateAPIView):
+class TradeCreateAPIView(APIView):
     """
-    Vue de creer un trade
+    Vue qui permet de creer un trade
     """
-    queryset = Trade.objects.all()
-    serializer_class = TradeSerializer
+
+    def post(self, request):
+        """
+        Cree un Trade pour un utilisateur
+        """
+        response_data = {"message": ""}
+        trade_data = request.data
+        user_portfolio = request.user.portfolio
+        # On recupere le prix actuel de l'action
+        symbol_info, meta = ts.get_quote_endpoint(symbol=trade_data["symbol"])
+        buy_price = float(symbol_info["05. price"])
+
+        try:
+            # On cree un nouveau Trade avec l'information recue
+            trade = Trade(portfolio=user_portfolio,
+                          buy_price=buy_price, **trade_data)
+            trade.save()
+            # TODO: Deduce trade amount from portfolio available amount
+            response_data["message"] = "Transaction effectuee avec succes"
+        except ValidationError as ve:
+            # On renvoie un message d'erreur dans la reponse
+            response_data["message"] = "Erreur durant la transaction"
+        finally:
+            return Response(data=response_data)
 
 
 class TradeListAPIView(generics.ListAPIView):
@@ -71,7 +93,7 @@ class TradeListAPIView(generics.ListAPIView):
     Vue qui permet de recuperer les trades
     """
     permission_classes = (IsFromUser,)
-    serializer_class = TradeSerializer
+    serializer_class = TradeSerializerComplete
 
     def get_queryset(self):
         """
@@ -145,4 +167,3 @@ class SymbolInfoView(APIView):
         # On inverse l'ordre de la liste, car le graphique veut les dates en ordre croissant
         formatted = formatted[::-1]
         return Response(data=json.dumps({"info": company_data, "chart_data": formatted}))
-

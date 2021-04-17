@@ -63,11 +63,11 @@ const SearchBar = ({}) => {
     const [input, setInput] = useState("");
     const [data, setData] = useState({});
     const [symbol, setSymbol] = useState([]);
- 
+
     const fetchData = async () => {
         try {
             const url = "http://localhost:8000/api/search/";
-           // setSymbol([]);
+            // setSymbol([]);
             const body = {
                 method: "POST",
                 headers: {
@@ -85,14 +85,8 @@ const SearchBar = ({}) => {
             json = JSON.parse(json);
             let i = 0;
             for (i in json) {
-
-                setSymbol((symbol) => [
-                    ...symbol,
-                    json[i]["1. symbol"],
-                ]);
-
+                setSymbol((symbol) => [...symbol, json[i]["1. symbol"]]);
             }
-           
         } catch (e) {
             console.log(e);
         }
@@ -115,7 +109,6 @@ const SearchBar = ({}) => {
             setSymbol([]);
             fetchData();
         } else {
-            
         }
     }
     const handleChange = (event) => {
