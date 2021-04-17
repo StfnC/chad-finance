@@ -135,16 +135,19 @@ class SearchSymbolView(APIView):
 
     def post(self, request):
         """
-        Retourner les actions associees au symbole recherche
+        Retourner les actions associees au symbole recherche sous forme de liste
         """
-        keywords = request.data["keywords"]
-        data, meta = ts.get_symbol_search(keywords=keywords)
-        # Un bug dans le package alpha_vantage fait en sorte qu'on ne recoit pas les donnees en format json
-        # Il faut passer d'un pandas DataFrame a JSON
-        parsed = json.loads(data.to_json(orient="index"))
-        formatted = list(parsed.values())
-
-        return Response(data=json.dumps(formatted))
+        results = {}
+        try:
+            keywords = request.data["keywords"]
+            data, meta = ts.get_symbol_search(keywords=keywords)
+            # Un bug dans le package alpha_vantage fait en sorte qu'on ne recoit pas les donnees en format json
+            # Il faut passer d'un pandas DataFrame a JSON
+            parsed = json.loads(data.to_json(orient="index"))
+            results = list(parsed.values())
+        except ValueError as ve:
+            results = [{"message": "Une erreur est survenue"}]
+        return Response(data=json.dumps(results))
 
 
 class SymbolInfoView(APIView):
