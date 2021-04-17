@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { createChart } from "lightweight-charts";
 import Chart from "./Chart";
+import Buy from "./Buy";
 
 const SymbolDetails = ({ match }) => {
     const [chartData, setChartData] = useState([]);
@@ -49,6 +50,7 @@ const SymbolDetails = ({ match }) => {
                 chartType="candle"
             />
             {/* Company Overview */}
+            <Buy symbol = {symbolOverview["Symbol"]} />
         </div>
     );
 };

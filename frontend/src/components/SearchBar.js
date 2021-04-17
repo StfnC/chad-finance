@@ -63,12 +63,11 @@ const SearchBar = ({}) => {
     const [input, setInput] = useState("");
     const [data, setData] = useState({});
     const [symbol, setSymbol] = useState([]);
-    let listSymbol = [];
-
+ 
     const fetchData = async () => {
         try {
             const url = "http://localhost:8000/api/search/";
-            setSymbol([]);
+           // setSymbol([]);
             const body = {
                 method: "POST",
                 headers: {
@@ -86,10 +85,14 @@ const SearchBar = ({}) => {
             json = JSON.parse(json);
             let i = 0;
             for (i in json) {
-                listSymbol.push(json[i]["1. symbol"]);
-                setSymbol((symbol) => [...symbol, json[i]["1. symbol"]]);
+
+                setSymbol((symbol) => [
+                    ...symbol,
+                    json[i]["1. symbol"],
+                ]);
+
             }
-            console.log(listSymbol);
+           
         } catch (e) {
             console.log(e);
         }
@@ -97,7 +100,6 @@ const SearchBar = ({}) => {
 
     useEffect(() => {
         getInput();
-        // listSymbol = [];
     }, [input]);
 
     function getInput() {
@@ -110,9 +112,10 @@ const SearchBar = ({}) => {
             })
         } */
         if (input.length > 0) {
+            setSymbol([]);
             fetchData();
         } else {
-            setSymbol([]);
+            
         }
     }
     const handleChange = (event) => {
@@ -158,35 +161,3 @@ const SearchBar = ({}) => {
 };
 
 export default SearchBar;
-
-/* function getStockName() {
-
-       // fonction pour donner au backend ce que l'utilisateur a demandé dans la search bar. Input = Stock abb ou name
-       const body = {
-           method: "POST",
-           headers: {
-               "Content-Type": "application/json",
-               Authorization: `JWT ${localStorage.getItem("access")}`,
-               Accept: "application/json",
-           },
-           data: JSON.stringify({
-               "keywords": "TSLA",
-           }),
-       };
-
-       fetch("http://localhost:8000/api/search/", body).then((response) => {
-           if (!response.ok) {
-               console.log(response.json());
-               return {};
-
-           } else {
-               console.log(response.json());
-               return response.json();
-           }
-       })
-           .then((data) => {
-               setData(response.json())
-               setResult(response.json().slice())
-           })
-
-   }*/

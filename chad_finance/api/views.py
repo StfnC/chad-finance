@@ -1,4 +1,6 @@
 import json
+
+from django.db.models.query import QuerySet
 from .models import UserAccount, Portfolio, Trade
 from .serializers import PortfolioSerializer, TradeSerializer
 from .permissions import IsFromUser
@@ -143,3 +145,4 @@ class SymbolInfoView(APIView):
         # On inverse l'ordre de la liste, car le graphique veut les dates en ordre croissant
         formatted = formatted[::-1]
         return Response(data=json.dumps({"info": company_data, "chart_data": formatted}))
+

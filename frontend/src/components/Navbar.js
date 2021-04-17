@@ -5,7 +5,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import { logout } from "../actions/auth";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import About from "./About";
 import { Fragment } from "react";
@@ -56,6 +56,8 @@ const Navbar = ({ logout, isAuthenticated }) => {
                         className={classes.logo}
                         color="inherit"
                         aria-label="home"
+                        component = {Link}
+                        to = "/"
                     >
                         Chad Finance
                     </IconButton>
