@@ -3,7 +3,7 @@ import { Link, Redirect } from "react-router-dom";
 import { Button, Typography, TextField, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
-import { login } from "../actions/auth";
+import { login } from "../../actions/auth";
 
 const useStyles = makeStyles((theme) => ({
     root: {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { logout } from "../actions/auth";
+import { logout } from "../../actions/auth";
 import { makeStyles, Button, MenuItem, Menu } from "@material-ui/core";
 import Fade from "@material-ui/core/Fade";
 import { connect } from "react-redux";

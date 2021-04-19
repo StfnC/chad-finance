@@ -3,7 +3,7 @@ import { makeStyles, Button } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
-import { logout } from "../actions/auth";
+import { logout } from "../../actions/auth";
 import { connect } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 import SearchBar from "./SearchBar";
@@ -39,11 +39,11 @@ const Navbar = ({ logout, isAuthenticated }) => {
     };
 
     const userLinks = () => {
-        return (
+        return (    
             <Fragment>
                 <SearchBar />
                 <About />
-            </Fragment>
+            </Fragment>           
         );
     };
 

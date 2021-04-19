@@ -1,7 +1,7 @@
 import { Button } from "@material-ui/core";
 import { connect } from "react-redux";
 import { useHistory } from "react-router";
-import { verify } from "../actions/auth";
+import { verify } from "../../actions/auth";
 
 const Activate = ({ match, verify }) => {
     const history = useHistory();
