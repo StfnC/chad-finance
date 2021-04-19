@@ -1,7 +1,7 @@
 import { useState, useEffect, Fragment } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 
 
 // Component inspire de cette documentation: https://material-ui.com/components/autocomplete/#free-solo
@@ -52,6 +52,7 @@ export default function SearchBar() {
     const redirectToLink = (symbol) => {
         // TODO: Fix bug qui fait que si on est deja sur la page d'un stock et qu'on clic sur un lien, la page se re-render pas
         history.push(`/symbol/${symbol}`);
+        return <Redirect push exact to={`/symbol/${symbol}`} />;
     }
 
     return (

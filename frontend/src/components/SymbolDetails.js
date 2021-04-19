@@ -1,5 +1,4 @@
-import { useState, useRef, useEffect } from "react";
-import { createChart } from "lightweight-charts";
+import { useState, useEffect } from "react";
 import Chart from "./Chart";
 import Buy from "./Buy";
 
@@ -27,17 +26,25 @@ const SymbolDetails = ({ match }) => {
             };
             const res = await fetch(url, body);
             // On retourne la reponse sous format JSON
-            const res_json = JSON.parse(await res.json());
-            setChartData(res_json.chart_data);
-            setSymbolOverview(res_json.info[0]);
+            const resJson = JSON.parse(await res.json());
+            setChartData(resJson.chart_data);
+            setSymbolOverview(resJson.info[0]);
         } catch (error) {
             console.log(error);
         }
     };
 
     useEffect(() => {
-        initSymbolInfo();
-    }, []);
+        let active = true;
+        if (active) {
+            initSymbolInfo();
+            console.log("Active");
+        }
+
+        return () => {
+            active = false;
+        }
+    }, [match.params.symbol]);
 
     return (
         <div>
