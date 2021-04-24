@@ -6,6 +6,7 @@ import Login from "./components/LoginScreen/Login";
 import Register from "./components/LoginScreen/Register";
 import Activate from "./components/LoginScreen/Activate";
 import SymbolDetails from "./components/SymbolDetails";
+import TradeList from "./components/TradeList";
 import { Provider } from "react-redux";
 import store from "./store";
 
@@ -28,6 +29,7 @@ export default function App() {
                             path="/symbol/:symbol"
                             component={SymbolDetails}
                         />
+                        <Route exact path="/trades" component={TradeList} />
                     </Switch>
                 </Layout>
             </Router>
