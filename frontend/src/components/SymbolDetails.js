@@ -27,16 +27,30 @@ const SymbolDetails = ({ match }) => {
             };
             const res = await fetch(url, body);
             // On retourne la reponse sous format JSON
-            const res_json = JSON.parse(await res.json());
-            setChartData(res_json.chart_data);
-            setSymbolOverview(res_json.info[0]);
+            const resJson = JSON.parse(await res.json());
+            // Si la reponse contient un message, cela veut dire qu'il y a eu une erreur lors de la requete
+            // TODO: Ecrire quelque chose a l'utilisateur s'il y a ce genre d'erreur
+            if (!resJson.chart_data.message) {
+                setChartData(resJson.chart_data);
+            }
+            if (!resJson.info.message) {
+                setSymbolOverview(resJson.info[0]);
+            }
         } catch (error) {
             console.log(error);
         }
     };
 
     useEffect(() => {
-        initSymbolInfo();
+        let active = true;
+
+        if (active) {
+            initSymbolInfo();
+        }
+
+        return () => {
+            active = false
+        }
     }, []);
 
     return (

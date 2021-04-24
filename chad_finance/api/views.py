@@ -174,12 +174,38 @@ class SymbolInfoView(APIView):
         Retourne l'information sur la compagnie associee a un symbol ansi que les donnees pour construire un graphique de la valeur de la compagnie
         """
         symbol = request.data["symbol"]
-        data, meta = ts.get_daily_adjusted(symbol=symbol)
-        company_data = fd.get_company_overview(symbol=symbol)
-        keys = list(data.keys())
-        values = list(data.values())
-        # Cette ligne permet d'utiliser la fonction map pour formatter les donnees efficacement
-        formatted = list(map(self.format_chart_data, keys, values))
-        # On inverse l'ordre de la liste, car le graphique veut les dates en ordre croissant
-        formatted = formatted[::-1]
-        return Response(data=json.dumps({"info": company_data, "chart_data": formatted}))
+        chart_data = self.get_chart_data(symbol)
+        company_data = self.get_company_info(symbol)
+        return Response(data=json.dumps({"info": company_data, "chart_data": chart_data}))
+
+    def get_chart_data(self, symbol):
+        """
+        Retourne l'information financiere sur un symbole
+        """
+        data = dict()
+        try:
+            data, meta = ts.get_daily_adjusted(symbol=symbol)
+            keys = list(data.keys())
+            values = list(data.values())
+            # Cette ligne permet d'utiliser la fonction map pour formatter les donnees efficacement
+            formatted = list(map(self.format_chart_data, keys, values))
+            # On inverse l'ordre de la liste, car le graphique veut les dates en ordre croissant
+            data = formatted[::-1]
+        except ValueError as ve:
+            # Cette erreur survient lorsque le symbole recherche ne renvoie aucun resultat
+            data = {"message": "Aucune donnee financiere sur ce symbole"}
+
+        return data
+
+    def get_company_info(self, company):
+        """
+        Retourne l'information liee a une compagnie
+        """
+        data = dict()
+        try:
+            data = fd.get_company_overview(symbol=company)
+        except ValueError as ve:
+            # Cette erreur survient lorsque le symbole recherche ne renvoie aucun resultat
+            data = {"message": "Aucune information disponible sur ce symbole"}
+
+        return data
