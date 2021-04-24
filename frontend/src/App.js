@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, withRouter } from "react-router-dom";
 import Layout from "./components/Layout";
 import Home from "./components/Home";
 import Login from "./components/LoginScreen/Login";
@@ -27,7 +27,7 @@ export default function App() {
                         <Route
                             exact
                             path="/symbol/:symbol"
-                            component={SymbolDetails}
+                            component={withRouter(SymbolDetails)}
                         />
                         <Route exact path="/trades" component={TradeList} />
                     </Switch>

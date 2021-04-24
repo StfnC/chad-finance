@@ -5,21 +5,20 @@ import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { red } from '@material-ui/core/colors';
 
-
 // Component inspire de cette documentation: https://material-ui.com/components/autocomplete/#free-solo
 
 const useStyles = makeStyles((theme) => ({
-    padding:{
-        paddingRight : 20,
-        paddingTop : 5,
-        paddingBottom : 5,        
+    padding: {
+        paddingRight: 20,
+        paddingTop: 5,
+        paddingBottom: 5,
     },
-    font:{
-        backgroundColor:"white",
-    }, 
-    text:{
+    font: {
+        backgroundColor: "white",
+    },
+    text: {
         color: red,
-    } 
+    }
 }));
 
 export default function SearchBar() {
@@ -72,7 +71,7 @@ export default function SearchBar() {
     }
 
     return (
-        <div style={{ width: 300}} className = {classes.padding}>
+        <div style={{ width: 300 }} className={classes.padding}>
             <Autocomplete
                 freeSolo
                 id="search-bar"
@@ -97,9 +96,9 @@ export default function SearchBar() {
                 renderInput={(params) => (
                     <TextField
                         {...params}
-                        className = {classes.font}
+                        className={classes.font}
                         label="Cherchez une action"
-                        color = "secondary"
+                        color="secondary"
                         margin="normal"
                         variant="outlined"
                         InputProps={{ ...params.InputProps, type: 'search' }}
