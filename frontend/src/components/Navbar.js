@@ -42,6 +42,13 @@ const Navbar = ({ logout, isAuthenticated }) => {
         return (
             <Fragment>
                 <SearchBar />
+                <Button
+                    color="secondary"
+                    variant="contained"
+                    onClick={(event) => (window.location.href = "/trades")}
+                >
+                    Transactions
+                </Button>
                 <About />
             </Fragment>
         );
