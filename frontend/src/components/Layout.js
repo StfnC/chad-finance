@@ -16,7 +16,6 @@ const Layout = ({ checkAuthenticated, loadUser, children }) => {
         return () => {
             active = false;
         };
-        
     });
 
     return (

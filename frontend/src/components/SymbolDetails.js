@@ -45,7 +45,6 @@ const SymbolDetails = ({ match }) => {
         return () => {
             active = false;
         };
-        
     }, []);
 
     return (
