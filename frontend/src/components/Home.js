@@ -100,10 +100,16 @@ const Home = ({ isAuthenticated }) => {
     };
 
     useEffect(() => {
-        initName();
-        // TODO: Figure out why the chart doesn't update
-        initChartData();
-        initValue();
+        let active = true;
+        if (active) {
+            initName();
+            // TODO: Figure out why the chart doesn't update
+            initChartData();
+            initValue();
+        }
+        return () => {
+            active = false;
+        };
     }, []);
 
     if (!isAuthenticated) {

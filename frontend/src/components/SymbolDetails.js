@@ -36,7 +36,16 @@ const SymbolDetails = ({ match }) => {
     };
 
     useEffect(() => {
-        initSymbolInfo();
+        let active = true;
+
+        if (active) {
+            initSymbolInfo();
+        }
+
+        return () => {
+            active = false;
+        };
+        
     }, []);
 
     return (

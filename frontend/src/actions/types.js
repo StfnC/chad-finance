@@ -9,3 +9,4 @@ export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAIL = "REGISTER_FAIL";
 export const VERIFY_SUCCESS = "VERIFY_SUCCESS";
 export const VERIFY_FAIL = "VERIFY_FAIL";
+
