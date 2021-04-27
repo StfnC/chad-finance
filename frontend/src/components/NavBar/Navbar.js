@@ -3,7 +3,7 @@ import { makeStyles, Button } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
-import { logout } from "../actions/auth";
+import { logout } from "../../actions/auth";
 import { connect } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 import SearchBar from "./SearchBar";
@@ -42,6 +42,13 @@ const Navbar = ({ logout, isAuthenticated }) => {
         return (
             <Fragment>
                 <SearchBar />
+                <Button
+                    color="secondary"
+                    variant="contained"
+                    onClick={(event) => (window.location.href = "/trades")}
+                >
+                    Transactions
+                </Button>
                 <About />
             </Fragment>
         );

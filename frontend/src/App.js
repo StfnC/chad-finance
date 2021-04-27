@@ -2,10 +2,11 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Layout from "./components/Layout";
 import Home from "./components/Home";
-import Login from "./components/Login";
-import Register from "./components/Register";
-import Activate from "./components/Activate";
+import Login from "./components/LoginScreen/Login";
+import Register from "./components/LoginScreen/Register";
+import Activate from "./components/LoginScreen/Activate";
 import SymbolDetails from "./components/SymbolDetails";
+import TradeList from "./components/TradeList";
 import { Provider } from "react-redux";
 import store from "./store";
 
