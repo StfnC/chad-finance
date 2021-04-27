@@ -9,28 +9,33 @@ import SymbolDetails from "./components/SymbolDetails";
 import { Provider } from "react-redux";
 import store from "./store";
 
+import { ThemeProvider } from "@material-ui/core/styles"
+import theme from "./theme";
+
 export default function App() {
     return (
-        <Provider store={store}>
-            <Router>
-                <Layout>
-                    <Switch>
-                        <Route exact path="/" component={Home} />
-                        <Route exact path="/login" component={Login} />
-                        <Route exact path="/register" component={Register} />
-                        <Route
-                            exact
-                            path="/activate/:uid/:token"
-                            component={Activate}
-                        />
-                        <Route
-                            exact
-                            path="/symbol/:symbol"
-                            component={SymbolDetails}
-                        />
-                    </Switch>
-                </Layout>
-            </Router>
-        </Provider>
+        <ThemeProvider theme={theme}>
+            <Provider store={store}>
+                <Router>
+                    <Layout>
+                        <Switch>
+                            <Route exact path="/" component={Home} />
+                            <Route exact path="/login" component={Login} />
+                            <Route exact path="/register" component={Register} />
+                            <Route
+                                exact
+                                path="/activate/:uid/:token"
+                                component={Activate}
+                            />
+                            <Route
+                                exact
+                                path="/symbol/:symbol"
+                                component={SymbolDetails}
+                            />
+                        </Switch>
+                    </Layout>
+                </Router>
+            </Provider>
+        </ThemeProvider>
     );
 }
