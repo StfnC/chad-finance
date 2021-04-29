@@ -3,7 +3,6 @@ import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { red } from "@material-ui/core/colors";
 
 // Component inspire de cette documentation: https://material-ui.com/components/autocomplete/#free-solo
 
@@ -12,12 +11,6 @@ const useStyles = makeStyles((theme) => ({
         paddingRight: 20,
         paddingTop: 5,
         paddingBottom: 5,
-    },
-    font: {
-        backgroundColor: "white",
-    },
-    text: {
-        color: red,
     },
 }));
 
@@ -88,7 +81,6 @@ export default function SearchBar() {
                 }}
                 onInputChange={(event, newInputValue) => {
                     setInputValue(newInputValue);
-                    console.log(inputValue);
                 }}
                 renderOption={(option) => (
                     <Fragment>

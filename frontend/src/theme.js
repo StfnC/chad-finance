@@ -1,17 +1,17 @@
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createMuiTheme } from "@material-ui/core/styles";
 
 // Theme sombre pour le site
 export const theme = createMuiTheme({
     palette: {
-        type: 'dark',
+        type: "dark",
 
         primary: {
-            main: '#333f44',
-            contrastText: '#fff',
+            main: "#333f44",
+            contrastText: "#fff",
         },
         secondary: {
-            main: '#8bc34a',
-            contrastText: '#000',
+            main: "#8bc34a",
+            contrastText: "#000",
         },
         background: {
             default: "#303030",
@@ -27,23 +27,23 @@ export const theme = createMuiTheme({
 export const chartDarkTheme = {
     chart: {
         layout: {
-            backgroundColor: '#303030',
-            lineColor: '#2B2B43',
-            textColor: '#D9D9D9',
+            backgroundColor: "#303030",
+            lineColor: "#2B2B43",
+            textColor: "#D9D9D9",
         },
         crosshair: {
-            color: '#758696',
+            color: "#758696",
         },
         grid: {
             vertLines: {
-                color: '#2B2B43',
+                color: "#2B2B43",
             },
             horzLines: {
-                color: '#363C4E',
+                color: "#363C4E",
             },
         },
     },
     series: {
-        color: '#20E22F',
+        color: "#20E22F",
     },
 };

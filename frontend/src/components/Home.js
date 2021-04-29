@@ -43,7 +43,6 @@ const Home = ({ isAuthenticated }) => {
             const res = await fetch(url, body);
             const res_json = await res.json();
             setValue(parseFloat(res_json.value));
-            console.log(value)
         } catch (error) {
             console.log(error);
         }
@@ -89,7 +88,7 @@ const Home = ({ isAuthenticated }) => {
 
     useEffect(() => {
         let active = true;
-        
+
         if (active) {
             initName();
             initChartData();

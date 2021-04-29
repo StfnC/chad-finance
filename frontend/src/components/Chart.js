@@ -15,7 +15,6 @@ const Chart = ({ key, data, chartType }) => {
         chart.applyOptions(darkTheme.chart);
 
         if (active) {
-            console.log("update")
             switch (chartType) {
                 default:
                     break;
