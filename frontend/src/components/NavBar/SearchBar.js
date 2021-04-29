@@ -106,7 +106,7 @@ export default function SearchBar() {
                         label="Cherchez une action"
                         color="secondary"
                         margin="normal"
-                        variant="outlined"
+                        variant="filled"
                         InputProps={{ ...params.InputProps, type: "search" }}
                     />
                 )}

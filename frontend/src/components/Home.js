@@ -88,9 +88,16 @@ const Home = ({ isAuthenticated }) => {
     };
 
     useEffect(() => {
-        initName();
-        initChartData();
-        initValue();
+        let active = true;
+        
+        if (active) {
+            initName();
+            initChartData();
+            initValue();
+        }
+        return () => {
+            active = false;
+        };
     }, []);
 
     if (!isAuthenticated) {

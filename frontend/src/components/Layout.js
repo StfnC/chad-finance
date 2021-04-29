@@ -6,8 +6,16 @@ import Navbar from "./NavBar/Navbar";
 
 const Layout = ({ checkAuthenticated, loadUser, children }) => {
     useEffect(() => {
-        checkAuthenticated();
-        loadUser();
+        let active = true;
+
+        if (active) {
+            checkAuthenticated();
+            loadUser();
+        }
+
+        return () => {
+            active = false;
+        };
     });
 
     return (
