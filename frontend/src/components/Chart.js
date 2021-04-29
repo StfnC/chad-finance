@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { createChart } from "lightweight-charts";
+import { chartDarkTheme as darkTheme } from "../theme";
 
 const Chart = ({ key, data, chartType }) => {
     const chartRef = useRef(null);
@@ -11,6 +12,7 @@ const Chart = ({ key, data, chartType }) => {
             width: 800,
             height: 600,
         });
+        chart.applyOptions(darkTheme.chart);
 
         if (active) {
             console.log("update")
@@ -20,6 +22,7 @@ const Chart = ({ key, data, chartType }) => {
                 case "line":
                     const lineSeries = chart.addLineSeries();
                     lineSeries.setData(data);
+                    lineSeries.applyOptions(darkTheme.series);
                     break;
                 case "candle":
                     const candleStickSeries = chart.addCandlestickSeries();
