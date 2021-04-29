@@ -9,6 +9,7 @@ import { Link, Redirect } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import About from "./About";
 import { Fragment } from "react";
+import logo from "./logo.png";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -66,7 +67,7 @@ const Navbar = ({ logout, isAuthenticated }) => {
                         component={Link}
                         to="/"
                     >
-                        Chad Finance
+                        <img src={logo} alt="logo" style={{width: 180 }} />
                     </IconButton>
                     {/* Remplace des if else (opérateur ternaire) */}
                     {isAuthenticated ? userLinks() : anonymLinks()}
