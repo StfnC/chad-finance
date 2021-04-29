@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import TradeTable from "./TradeTable";
 
 const TradeList = ({ isAuthenticated }) => {
-    const [trades, setTrades] = useState([])
+    const [trades, setTrades] = useState([]);
 
     const initTrades = async () => {
         try {
@@ -33,7 +33,7 @@ const TradeList = ({ isAuthenticated }) => {
 
         return () => {
             active = false;
-        }
+        };
     }, []);
 
     // TODO: Add redirect for non authenticated users

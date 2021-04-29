@@ -1,32 +1,33 @@
-import { useState, useEffect, Fragment } from 'react';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import { useState, useEffect, Fragment } from "react";
+import TextField from "@material-ui/core/TextField";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { red } from '@material-ui/core/colors';
-
+import { red } from "@material-ui/core/colors";
 
 // Component inspire de cette documentation: https://material-ui.com/components/autocomplete/#free-solo
 
 const useStyles = makeStyles((theme) => ({
-    padding:{
-        paddingRight : 20,
-        paddingTop : 5,
-        paddingBottom : 5,        
+    padding: {
+        paddingRight: 20,
+        paddingTop: 5,
+        paddingBottom: 5,
     },
-    font:{
-        backgroundColor:"white",
-    }, 
-    text:{
+    font: {
+        backgroundColor: "white",
+    },
+    text: {
         color: red,
-    } 
+    },
 }));
 
 export default function SearchBar() {
     const classes = useStyles();
     const [value, setValue] = useState(null);
-    const [inputValue, setInputValue] = useState('');
-    const [results, setResults] = useState([{ "1. symbol": "", "2. name": "" }]);
+    const [inputValue, setInputValue] = useState("");
+    const [results, setResults] = useState([
+        { "1. symbol": "", "2. name": "" },
+    ]);
     const history = useHistory();
 
     const fetchData = async () => {
@@ -69,16 +70,18 @@ export default function SearchBar() {
     const redirectToLink = (symbol) => {
         // TODO: Fix bug qui fait que si on est deja sur la page d'un stock et qu'on clic sur un lien, la page se re-render pas
         history.push(`/symbol/${symbol}`);
-    }
+    };
 
     return (
-        <div style={{ width: 300}} className = {classes.padding}>
+        <div style={{ width: 300 }} className={classes.padding}>
             <Autocomplete
                 freeSolo
                 id="search-bar"
                 disableClearable
                 options={results}
-                getOptionLabel={(option) => option["2. name"] + " - " + option["1. symbol"]}
+                getOptionLabel={(option) =>
+                    option["2. name"] + " - " + option["1. symbol"]
+                }
                 value={value}
                 onChange={(event, newValue) => {
                     setValue(newValue);
@@ -89,7 +92,9 @@ export default function SearchBar() {
                 }}
                 renderOption={(option) => (
                     <Fragment>
-                        <span onClick={() => redirectToLink(option["1. symbol"])}>
+                        <span
+                            onClick={() => redirectToLink(option["1. symbol"])}
+                        >
                             {option["2. name"] + " - " + option["1. symbol"]}
                         </span>
                     </Fragment>
@@ -97,12 +102,12 @@ export default function SearchBar() {
                 renderInput={(params) => (
                     <TextField
                         {...params}
-                        className = {classes.font}
+                        className={classes.font}
                         label="Cherchez une action"
-                        color = "secondary"
+                        color="secondary"
                         margin="normal"
                         variant="outlined"
-                        InputProps={{ ...params.InputProps, type: 'search' }}
+                        InputProps={{ ...params.InputProps, type: "search" }}
                     />
                 )}
             />

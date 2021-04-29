@@ -39,7 +39,7 @@ const Navbar = ({ logout, isAuthenticated }) => {
     };
 
     const userLinks = () => {
-        return (    
+        return (
             <Fragment>
                 <SearchBar />
                 <Button
@@ -50,7 +50,7 @@ const Navbar = ({ logout, isAuthenticated }) => {
                     Transactions
                 </Button>
                 <About />
-            </Fragment>           
+            </Fragment>
         );
     };
 

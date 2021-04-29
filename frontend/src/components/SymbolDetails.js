@@ -1,5 +1,4 @@
-import { useState, useRef, useEffect } from "react";
-import { createChart } from "lightweight-charts";
+import { useState, useEffect } from "react";
 import Chart from "./Chart";
 import Buy from "./Buy";
 
@@ -49,8 +48,8 @@ const SymbolDetails = ({ match }) => {
         }
 
         return () => {
-            active = false
-        }
+            active = false;
+        };
     }, [match.params.symbol]);
 
     return (
