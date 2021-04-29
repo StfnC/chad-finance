@@ -11,11 +11,13 @@ import { Provider } from "react-redux";
 import store from "./store";
 
 import { ThemeProvider } from "@material-ui/core/styles"
+import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from "./theme";
 
 export default function App() {
     return (
         <ThemeProvider theme={theme}>
+            <CssBaseline />
             <Provider store={store}>
                 <Router>
                     <Layout>
