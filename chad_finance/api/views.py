@@ -11,6 +11,7 @@ from alpha_vantage.fundamentaldata import FundamentalData
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from decimal import Decimal
+from django.utils.dateparse import parse_date
 
 # Objet TimeSeries qui permet de faire des requetes a l'api TimeSeries de Alpha Vantage
 ts = TimeSeries(key=str(settings.ALPHA_VANTAGE_KEY))
@@ -72,14 +73,18 @@ class TradeCreateAPIView(APIView):
         response_data = {"message": ""}
         trade_data = request.data
         user_portfolio = request.user.portfolio
+        symbol = trade_data["symbol"]
+        quantity = Decimal(trade_data["quantity"])
         # On recupere le prix actuel de l'action
         symbol_info, meta = ts.get_quote_endpoint(symbol=trade_data["symbol"])
         buy_price = float(symbol_info["05. price"])
+        # On prend la date la plus recente quand la bourse etait ouverte pour cette action
+        buy_date = parse_date(symbol_info["07. latest trading day"])
 
         try:
             # On cree un nouveau Trade avec l'information recue
             trade = Trade(portfolio=user_portfolio,
-                          buy_price=buy_price, **trade_data)
+                          buy_price=buy_price, buy_date=buy_date, symbol=symbol, quantity=quantity)
             trade.save()
             # On deduit le montant de l'achat a la quantite de fonds disponibles
             self.deduce_trade_amount(
@@ -88,6 +93,7 @@ class TradeCreateAPIView(APIView):
         except ValidationError as ve:
             # On renvoie un message d'erreur dans la reponse
             response_data["message"] = "Erreur durant la transaction"
+            print(ve)
         finally:
             return Response(data=response_data)
 
@@ -147,6 +153,7 @@ class SearchSymbolView(APIView):
             results = list(parsed.values())
         except ValueError as ve:
             results = [{"message": "Une erreur est survenue"}]
+            print(ve)
         return Response(data=json.dumps(results))
 
 
@@ -194,6 +201,7 @@ class SymbolInfoView(APIView):
         except ValueError as ve:
             # Cette erreur survient lorsque le symbole recherche ne renvoie aucun resultat
             data = {"message": "Aucune donnee financiere sur ce symbole"}
+            print(ve)
 
         return data
 
@@ -207,5 +215,6 @@ class SymbolInfoView(APIView):
         except ValueError as ve:
             # Cette erreur survient lorsque le symbole recherche ne renvoie aucun resultat
             data = {"message": "Aucune information disponible sur ce symbole"}
+            print(ve)
 
         return data

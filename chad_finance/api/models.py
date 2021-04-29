@@ -67,7 +67,8 @@ class Trade(models.Model):
     portfolio = models.ForeignKey(to="Portfolio", on_delete=models.CASCADE)
     symbol = models.CharField(max_length=5, blank=False)
     buy_price = models.DecimalField(max_digits=25, decimal_places=4)
-    buy_date = models.DateTimeField(auto_now_add=True)
+    buy_date = models.DateField()
+    trade_made_day = models.DateTimeField(auto_now_add=True)
     quantity = models.DecimalField(
         max_digits=50, decimal_places=2, blank=False)
 
@@ -80,11 +81,11 @@ class Trade(models.Model):
         data, metadata = ts.get_daily_adjusted(
             symbol=self.symbol, outputsize="compact")
         try:
-            data = get_data_from_date_window(data, str(self.buy_date.date()))
+            data = get_data_from_date_window(data, str(self.buy_date))
         except ValueError as ve:
             # Cette erreur survient lorsqu'on essaie d'obtenir la valeur d'une action achetee le jour meme
             # On renvoie alors les donnees au moment de l'achat
-            data = {str(self.buy_date.date()): {"4. close": self.buy_price}}
+            data = {str(self.buy_date): {"4. close": self.buy_price}}
         return data
 
     def __str__(self):
@@ -116,9 +117,14 @@ class Portfolio(models.Model):
         """
         Retourne un dictionnaire qui contient les donnees necessaires pour construire un graphique de la valeur du portfolio en fonction du temps
         """
+        # On prend des dates jusqu'a une semaine avant la creation du portfolio
+        # Cela est fait car parfois, lorsque l'utilisateur fait un achat la fin de semaine et que le portfolio a ete cree la journee meme, on obtient des bugs
+        # Cela est du au fait que la fin de semaine, le dernier prix disponible est celui du vendredi, c'est a dire avant que le portfolio soit cree
+        # Cette solution ne change pas le graphique, mais une meilleur solution serait de dire a l'utilisateur qu'il ne peut pas acheter cette action en ce moment
+        date_range_start = self.creation_date - datetime.timedelta(days=7)
         # On cree une liste de journees entre aujourd'hui et le moment de la creation du portfolio
-        dates = [self.creation_date + datetime.timedelta(n) for n in range(
-            int((datetime.date.today() - self.creation_date).days) + 1)]
+        dates = [date_range_start + datetime.timedelta(n) for n in range(
+            int((datetime.date.today() - date_range_start).days) + 1)]
         # On cree un dictionnaire ayant pour cle les dates et qui ont comme valeur initiale zero
         values = {str(date): 0 for date in dates}
 
@@ -130,7 +136,6 @@ class Portfolio(models.Model):
                 values[date] += float(data[date]['4. close']) * \
                     float(trade.quantity)
 
-        # TODO: Arrondir les montants
         # On enleve les journees ou la valeur du portfolio est zero
         for key, value in list(values.items()):
             if value == 0:

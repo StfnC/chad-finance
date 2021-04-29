@@ -51,7 +51,7 @@ const SymbolDetails = ({ match }) => {
         return () => {
             active = false
         }
-    }, []);
+    }, [match.params.symbol]);
 
     return (
         <div>
