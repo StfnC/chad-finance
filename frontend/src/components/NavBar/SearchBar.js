@@ -26,8 +26,8 @@ export default function SearchBar() {
 
     const fetchData = async () => {
         if (inputValue.length > 0) {
-            const body = { keywords: inputValue, }
-            const res = await callToBackend("POST", "/api/search/", true, body)
+            const body = { keywords: inputValue };
+            const res = await callToBackend("POST", "/api/search/", true, body);
             // TODO: Trouver pourquoi il faut parse cet reponse
             setResults(JSON.parse(res));
         }

@@ -9,7 +9,7 @@ const TradeList = ({ isAuthenticated }) => {
 
     const initTrades = async () => {
         // On obtient la liste de tous les trades effectues
-        const res = await callToBackend("GET", "/api/trade/all/", true)
+        const res = await callToBackend("GET", "/api/trade/all/", true);
         setTrades(res);
     };
 

@@ -65,7 +65,8 @@ const Home = ({ isAuthenticated }) => {
     return (
         <div>
             <h1>
-                Voici votre portfolio, {name} <br /> Valeur : {portfolioValue.toFixed(2)}
+                Voici votre portfolio, {name} <br /> Valeur :{" "}
+                {portfolioValue.toFixed(2)}
             </h1>
             {/* Le props key est necessaire pour que le graphique soit mis a jour une fois que les donnees du graphique sont modifiees
             Pour plus d'info: https://reactjs.org/docs/lists-and-keys.html

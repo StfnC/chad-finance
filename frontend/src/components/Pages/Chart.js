@@ -37,7 +37,6 @@ const Chart = ({ data, chartType }) => {
         };
     }, [chartType, data]);
 
-    
     return <div ref={chartRef} />;
 };
 

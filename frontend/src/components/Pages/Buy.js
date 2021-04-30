@@ -57,8 +57,8 @@ const Buy = (props) => {
         const body = {
             symbol: props.symbol,
             quantity: value,
-        }
-        const res = await callToBackend("POST", "/api/trade/", true, body)
+        };
+        const res = await callToBackend("POST", "/api/trade/", true, body);
         // TODO: Afficher un message d'erreur ou de succes
     };
 

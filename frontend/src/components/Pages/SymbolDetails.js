@@ -14,8 +14,10 @@ const SymbolDetails = ({ match, isAuthenticated }) => {
 
     const initSymbolInfo = async () => {
         // Permet de recuperer les donnees pour construire le graphique
-        const body = { symbol: match.params.symbol }
-        const res = JSON.parse(await callToBackend("POST", "/api/symbol/", true, body))
+        const body = { symbol: match.params.symbol };
+        const res = JSON.parse(
+            await callToBackend("POST", "/api/symbol/", true, body)
+        );
         // Si la reponse contient un message, cela veut dire qu'il y a eu une erreur lors de la requete
         if (!res.chart_data.message) {
             setChartData(res.chart_data);
@@ -36,7 +38,6 @@ const SymbolDetails = ({ match, isAuthenticated }) => {
             active = false;
         };
     }, [match.params.symbol]);
-
 
     if (!isAuthenticated) {
         return <Redirect to="/login" />;

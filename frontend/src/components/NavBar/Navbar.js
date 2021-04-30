@@ -28,11 +28,10 @@ const Navbar = ({ logout, isAuthenticated }) => {
     const classes = useStyles();
     const history = useHistory();
 
-
     const redirectTo = (link) => {
         // Redirige l'utilisateur vers une certaine page
         history.push(link);
-    }
+    };
 
     const anonymLinks = () => {
         return (

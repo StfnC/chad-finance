@@ -1,4 +1,9 @@
-export const callToBackend = async (method, endpoint, withAuth, reqBody={}) => {
+export const callToBackend = async (
+    method,
+    endpoint,
+    withAuth,
+    reqBody = {}
+) => {
     // Fonction utilisee pour faire des appels au backend django
     try {
         const url = `http://localhost:8000${endpoint}`;
@@ -6,7 +11,9 @@ export const callToBackend = async (method, endpoint, withAuth, reqBody={}) => {
             method: method,
             headers: {
                 "Content-Type": "application/json",
-                Authorization: withAuth ? `JWT ${localStorage.getItem("access")}` : "",
+                Authorization: withAuth
+                    ? `JWT ${localStorage.getItem("access")}`
+                    : "",
                 Accept: "application/json",
             },
         };
