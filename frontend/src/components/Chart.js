@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { createChart } from "lightweight-charts";
 import { chartDarkTheme as darkTheme } from "../theme";
 
-const Chart = ({ key, data, chartType }) => {
+const Chart = ({ data, chartType }) => {
     const chartRef = useRef(null);
 
     // Quand la page se charge, on initialise le graphique
@@ -35,11 +35,10 @@ const Chart = ({ key, data, chartType }) => {
             chart.remove();
             active = false;
         };
-    }, [key, data]);
+    }, [chartType, data]);
 
-    // Le props key est necessaire pour que le graphique soit mis a jour une fois que les donnees du graphique sont modifiees
-    // Pour plus d'info: https://reactjs.org/docs/lists-and-keys.html
-    return <div key={key} ref={chartRef} />;
+    
+    return <div ref={chartRef} />;
 };
 
 export default Chart;
