@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import Chart from "./Chart";
 import Buy from "./Buy";
 
-const SymbolDetails = ({ match }) => {
+const SymbolDetails = ({ match, isAuthenticated }) => {
     const [chartData, setChartData] = useState([]);
 
     const [symbolOverview, setSymbolOverview] = useState([
@@ -52,6 +54,11 @@ const SymbolDetails = ({ match }) => {
         };
     }, [match.params.symbol]);
 
+
+    if (!isAuthenticated) {
+        return <Redirect to="/login" />;
+    }
+
     return (
         <div>
             <h1>
@@ -68,4 +75,8 @@ const SymbolDetails = ({ match }) => {
     );
 };
 
-export default SymbolDetails;
+const mapStateToProps = (state) => ({
+    isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, {})(SymbolDetails);

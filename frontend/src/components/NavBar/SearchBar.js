@@ -61,7 +61,6 @@ export default function SearchBar() {
     }, [value, inputValue]);
 
     const redirectToLink = (symbol) => {
-        // TODO: Fix bug qui fait que si on est deja sur la page d'un stock et qu'on clic sur un lien, la page se re-render pas
         history.push(`/symbol/${symbol}`);
     };
 

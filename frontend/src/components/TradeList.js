@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import TradeTable from "./TradeTable";
 
 const TradeList = ({ isAuthenticated }) => {
@@ -36,7 +37,9 @@ const TradeList = ({ isAuthenticated }) => {
         };
     }, []);
 
-    // TODO: Add redirect for non authenticated users
+    if (!isAuthenticated) {
+        return <Redirect to="/login" />;
+    }
 
     return (
         <div>

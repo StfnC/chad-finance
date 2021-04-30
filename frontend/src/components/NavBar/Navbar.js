@@ -1,11 +1,11 @@
-import React from "react";
+import { useHistory } from "react-router";
 import { makeStyles, Button } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import { logout } from "../../actions/auth";
 import { connect } from "react-redux";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import About from "./About";
 import { Fragment } from "react";
@@ -26,13 +26,20 @@ const useStyles = makeStyles((theme) => ({
 
 const Navbar = ({ logout, isAuthenticated }) => {
     const classes = useStyles();
+    const history = useHistory();
+
+
+    const redirectTo = (link) => {
+        // Redirige l'utilisateur vers une certaine page
+        history.push(link);
+    }
 
     const anonymLinks = () => {
         return (
             <Button
                 color="secondary"
                 variant="contained"
-                onClick={(event) => (window.location.href = "/login")}
+                onClick={(e) => redirectTo("/login")}
             >
                 Login
             </Button>
@@ -46,7 +53,7 @@ const Navbar = ({ logout, isAuthenticated }) => {
                 <Button
                     color="secondary"
                     variant="contained"
-                    onClick={(event) => (window.location.href = "/trades")}
+                    onClick={(e) => redirectTo("/trades")}
                 >
                     Transactions
                 </Button>
@@ -67,7 +74,7 @@ const Navbar = ({ logout, isAuthenticated }) => {
                         component={Link}
                         to="/"
                     >
-                        <img src={logo} alt="logo" style={{width: 180 }} />
+                        <img src={logo} alt="logo" style={{ width: 180 }} />
                     </IconButton>
                     {/* Remplace des if else (opérateur ternaire) */}
                     {isAuthenticated ? userLinks() : anonymLinks()}
