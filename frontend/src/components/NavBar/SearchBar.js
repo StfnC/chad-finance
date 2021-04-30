@@ -3,6 +3,7 @@ import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
+import { callToBackend } from "../../utils/requests";
 
 // Component inspire de cette documentation: https://material-ui.com/components/autocomplete/#free-solo
 
@@ -25,26 +26,10 @@ export default function SearchBar() {
 
     const fetchData = async () => {
         if (inputValue.length > 0) {
-            try {
-                const url = "http://localhost:8000/api/search/";
-                const body = {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `JWT ${localStorage.getItem("access")}`,
-                        Accept: "application/json",
-                    },
-                    body: JSON.stringify({
-                        keywords: inputValue,
-                    }),
-                };
-                const res = await fetch(url, body);
-                let json = await res.json();
-                json = JSON.parse(json);
-                setResults(json);
-            } catch (e) {
-                console.log(e);
-            }
+            const body = { keywords: inputValue, }
+            const res = await callToBackend("POST", "/api/search/", true, body)
+            // TODO: Trouver pourquoi il faut parse cet reponse
+            setResults(JSON.parse(res));
         }
     };
 

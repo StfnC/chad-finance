@@ -1,18 +1,18 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Layout from "./components/Layout";
-import Home from "./components/Home";
-import Login from "./components/LoginScreen/Login";
-import Register from "./components/LoginScreen/Register";
-import Activate from "./components/LoginScreen/Activate";
-import SymbolDetails from "./components/SymbolDetails";
-import TradeList from "./components/TradeList";
+import Home from "./components/Pages/Home";
+import Login from "./components/Auth/Login";
+import Register from "./components/Auth/Register";
+import Activate from "./components/Auth/Activate";
+import SymbolDetails from "./components/Pages/SymbolDetails";
+import TradeList from "./components/Pages/TradeList";
 import { Provider } from "react-redux";
-import store from "./store";
+import store from "./utils/store";
 
 import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import { theme } from "./theme";
+import { theme } from "./utils/theme";
 
 export default function App() {
     return (

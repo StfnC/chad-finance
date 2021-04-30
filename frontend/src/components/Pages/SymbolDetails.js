@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import Chart from "./Chart";
 import Buy from "./Buy";
+import { callToBackend } from "../../utils/requests";
 
 const SymbolDetails = ({ match, isAuthenticated }) => {
     const [chartData, setChartData] = useState([]);
@@ -13,32 +14,14 @@ const SymbolDetails = ({ match, isAuthenticated }) => {
 
     const initSymbolInfo = async () => {
         // Permet de recuperer les donnees pour construire le graphique
-        try {
-            const url = "http://localhost:8000/api/symbol/";
-            const body = {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `JWT ${localStorage.getItem("access")}`,
-                    Accept: "application/json",
-                },
-                body: JSON.stringify({
-                    symbol: match.params.symbol,
-                }),
-            };
-            const res = await fetch(url, body);
-            // On retourne la reponse sous format JSON
-            const resJson = JSON.parse(await res.json());
-            // Si la reponse contient un message, cela veut dire qu'il y a eu une erreur lors de la requete
-            // TODO: Ecrire quelque chose a l'utilisateur s'il y a ce genre d'erreur
-            if (!resJson.chart_data.message) {
-                setChartData(resJson.chart_data);
-            }
-            if (!resJson.info.message) {
-                setSymbolOverview(resJson.info[0]);
-            }
-        } catch (error) {
-            console.log(error);
+        const body = { symbol: match.params.symbol }
+        const res = JSON.parse(await callToBackend("POST", "/api/symbol/", true, body))
+        // Si la reponse contient un message, cela veut dire qu'il y a eu une erreur lors de la requete
+        if (!res.chart_data.message) {
+            setChartData(res.chart_data);
+        }
+        if (!res.info.message) {
+            setSymbolOverview(res.info[0]);
         }
     };
 

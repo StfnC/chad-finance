@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { createChart } from "lightweight-charts";
-import { chartDarkTheme as darkTheme } from "../theme";
+import { chartDarkTheme as darkTheme } from "../../utils/theme";
 
 const Chart = ({ data, chartType }) => {
     const chartRef = useRef(null);

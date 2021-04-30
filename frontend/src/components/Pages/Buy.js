@@ -4,6 +4,7 @@ import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
 import { green } from "@material-ui/core/colors";
 import { Typography } from "@material-ui/core";
+import { callToBackend } from "../../utils/requests";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -53,31 +54,12 @@ const Buy = (props) => {
     };
 
     const makeTrade = async () => {
-        try {
-            const url = "http://localhost:8000/api/trade/";
-            const body = {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `JWT ${localStorage.getItem("access")}`,
-                    Accept: "application/json",
-                },
-                body: JSON.stringify({
-                    symbol: props.symbol,
-                    quantity: value,
-                }),
-            };
-            const res = await fetch(url, body);
-            if (res.ok) {
-                setSuccessMsg("La transaction s'est fait avec succes");
-            } else {
-                setErrorMsg(
-                    "Un probleme sest produit, la transaction ne s'est pas effectué"
-                );
-            }
-        } catch (e) {
-            console.log(e);
+        const body = {
+            symbol: props.symbol,
+            quantity: value,
         }
+        const res = await callToBackend("POST", "/api/trade/", true, body)
+        // TODO: Afficher un message d'erreur ou de succes
     };
 
     const body = (
