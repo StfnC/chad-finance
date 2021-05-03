@@ -20,34 +20,42 @@ export default function App() {
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <Provider store={store}>
-            
                 <Router>
                     <Layout>
-                    <div className = "page-container">
-                        <Switch>
-                            <Route exact path="/" component={Home} />
-                            <Route exact path="/login" component={Login} />
-                            <Route
-                                exact
-                                path="/register"
-                                component={Register}
-                            />
-                            <Route
-                                exact
-                                path="/activate/:uid/:token"
-                                component={Activate}
-                            />
-                            <Route
-                                exact
-                                path="/symbol/:symbol"
-                                component={SymbolDetails}
-                            />
-                            <Route exact path="/trades" component={TradeList} />
-                        </Switch>
+                        <div className="page-container">
+                            <div className="content-wrap">
+                                <Switch>
+                                    <Route exact path="/" component={Home} />
+                                    <Route
+                                        exact
+                                        path="/login"
+                                        component={Login}
+                                    />
+                                    <Route
+                                        exact
+                                        path="/register"
+                                        component={Register}
+                                    />
+                                    <Route
+                                        exact
+                                        path="/activate/:uid/:token"
+                                        component={Activate}
+                                    />
+                                    <Route
+                                        exact
+                                        path="/symbol/:symbol"
+                                        component={SymbolDetails}
+                                    />
+                                    <Route
+                                        exact
+                                        path="/trades"
+                                        component={TradeList}
+                                    />
+                                </Switch>
+                            </div>
                         </div>
                     </Layout>
                 </Router>
-                
             </Provider>
         </ThemeProvider>
     );

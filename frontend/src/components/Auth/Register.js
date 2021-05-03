@@ -8,19 +8,18 @@ import { connect } from "react-redux";
 const useStyles = makeStyles((theme) => ({
     root: {
         "& > *": {
-           // width: theme.spacing(80),
-         //   height: theme.spacing(80),
+            // width: theme.spacing(80),
+            //   height: theme.spacing(80),
             backgroundColor: "#0df2c9",
         },
     },
     space: {
         margin: theme.spacing(1),
         marginBottom: theme.spacing(2),
-        
     },
-    rightBorder:{
+    rightBorder: {
         marginRight: theme.spacing(2),
-    }
+    },
 }));
 
 const Register = ({ register, isAuthenticated }) => {
@@ -47,7 +46,7 @@ const Register = ({ register, isAuthenticated }) => {
     // TODO: Fix le layout
     return (
         <div className={classe.root}>
-            <Paper >
+            <Paper>
                 <Typography
                     className={classe.space}
                     align="center"
@@ -57,8 +56,8 @@ const Register = ({ register, isAuthenticated }) => {
                     Créer un compte
                 </Typography>
                 <form onSubmit={onSubmit}>
-                    <div className = {classe.rightBorder}>
-                        <div >
+                    <div className={classe.rightBorder}>
+                        <div>
                             <TextField
                                 className={classe.space}
                                 label="Email"
@@ -110,15 +109,14 @@ const Register = ({ register, isAuthenticated }) => {
                         </div>
                     </div>
                     <div className={classe.space}>
-                    <Button
-                        
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                        fullWidth
-                    >
-                        Créer un compte
-                    </Button>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            fullWidth
+                        >
+                            Créer un compte
+                        </Button>
                     </div>
                 </form>
             </Paper>
