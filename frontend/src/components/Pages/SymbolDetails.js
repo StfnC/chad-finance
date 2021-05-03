@@ -55,6 +55,7 @@ const SymbolDetails = ({ match, isAuthenticated }) => {
             />
             {/* Company Overview */}
             <Buy symbol={symbolOverview["Symbol"]} />
+            <p> {symbolOverview["Description"]}</p>
         </div>
     );
 };

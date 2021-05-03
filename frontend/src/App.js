@@ -9,6 +9,7 @@ import SymbolDetails from "./components/Pages/SymbolDetails";
 import TradeList from "./components/Pages/TradeList";
 import { Provider } from "react-redux";
 import store from "./utils/store";
+import "./App.css";
 
 import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -19,8 +20,10 @@ export default function App() {
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <Provider store={store}>
+            
                 <Router>
                     <Layout>
+                    <div className = "page-container">
                         <Switch>
                             <Route exact path="/" component={Home} />
                             <Route exact path="/login" component={Login} />
@@ -41,8 +44,10 @@ export default function App() {
                             />
                             <Route exact path="/trades" component={TradeList} />
                         </Switch>
+                        </div>
                     </Layout>
                 </Router>
+                
             </Provider>
         </ThemeProvider>
     );
