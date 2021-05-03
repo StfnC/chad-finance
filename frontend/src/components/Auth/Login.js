@@ -5,12 +5,21 @@ import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { login } from "../../actions/auth";
 
+const getModalStyle = () => {
+    const top = 50;
+    const left = 50;
+
+    return {
+        top: `${top}%`,
+       // left: `${left}%`,
+       // transform: `translate(-${top}%, -${left}%)`,
+    };
+}
+
 const useStyles = makeStyles((theme) => ({
     root: {
         "& > *": {
-            // width: theme.spacing(60),
-            // height: theme.spacing(20),
-            backgroundColor: "#0df2c9",
+              marginTop: theme.spacing(25),  
         },
     },
     space: {
@@ -24,6 +33,7 @@ const Login = ({ login, isAuthenticated }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const classe = useStyles();
+    const [modalStyle] = useState(getModalStyle);
 
     function onSubmit(event) {
         event.preventDefault();

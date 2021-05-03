@@ -8,9 +8,7 @@ import { connect } from "react-redux";
 const useStyles = makeStyles((theme) => ({
     root: {
         "& > *": {
-            // width: theme.spacing(80),
-            //   height: theme.spacing(80),
-            backgroundColor: "#0df2c9",
+            marginTop : theme.spacing(20),
         },
     },
     space: {

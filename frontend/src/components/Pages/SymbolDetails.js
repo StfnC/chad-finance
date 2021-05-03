@@ -22,8 +22,14 @@ const useStyles = makeStyles((theme) => ({
     hr: {
         width: 800,
         marginLeft: 1,
-        textAlign: "justify",
     },
+    description: {
+        width: 800,
+        marginLeft: 1,
+        textAlign: "justify",
+        fontFamily:[ "Times New Roman", "Times", "serif"],
+
+    }
 }));
 
 const SymbolDetails = ({ match, isAuthenticated }) => {
@@ -153,7 +159,7 @@ const SymbolDetails = ({ match, isAuthenticated }) => {
     const definitionStock = () => {
         return (
             <div className={classes.root}>
-                <Typography className={classes.hr}>
+                <Typography className={classes.description}>
                     {" "}
                     {symbolOverview["Description"]}
                 </Typography>
@@ -181,7 +187,7 @@ const SymbolDetails = ({ match, isAuthenticated }) => {
             <h3>Information sur la compagnie</h3>
             {infoStock()}
             <hr className={classes.hr} />
-            <h3>Définition de la compagnie</h3>
+            <h3>Description de la compagnie</h3>
             {definitionStock()}
             <hr className={classes.hr} />
             <br />

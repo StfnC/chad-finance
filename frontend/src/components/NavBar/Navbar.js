@@ -22,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
     title: {
         flexGrow: 1,
     },
+    button: {
+        marginRight: 6,
+    }
 }));
 
 const Navbar = ({ logout, isAuthenticated }) => {
@@ -53,6 +56,7 @@ const Navbar = ({ logout, isAuthenticated }) => {
                     color="secondary"
                     variant="contained"
                     onClick={(e) => redirectTo("/trades")}
+                    className = {classes.button}
                 >
                     Transactions
                 </Button>

@@ -20,13 +20,16 @@ const Layout = ({ checkAuthenticated, loadUser, children }) => {
     });
 
     return (
+
+
         <div>
-            <div className="content-wrap">
+            
                 <Navbar />
                 <div className="center">{children}</div>
-            </div>
+            
             <Footer />
         </div>
+
     );
 };
 
