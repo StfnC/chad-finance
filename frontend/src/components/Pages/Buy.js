@@ -20,6 +20,8 @@ const useStyles = makeStyles((theme) => ({
 
     button: {
         backgroundColor: green,
+        margin: theme.spacing(1),
+        marginBottom : theme.spacing(4),
     },
     space: {
         margin: theme.spacing(1),
