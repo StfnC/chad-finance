@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router";
 import Chart from "./Chart";
+import NumberFormat from 'react-number-format';
 import { callToBackend } from "../../utils/requests";
 
 const Home = ({ isAuthenticated }) => {
@@ -18,7 +19,7 @@ const Home = ({ isAuthenticated }) => {
     const initPortfolioValue = async () => {
         // Fonction permettant de récuperer la valeur du portfolio
         const res = await callToBackend("GET", "/api/portfolio/", true);
-        setPortfolioValue(parseFloat(res.value));
+        setPortfolioValue(parseFloat(res.value) + parseFloat(res.current_amount));
     };
 
     const initChartData = async () => {
@@ -50,8 +51,8 @@ const Home = ({ isAuthenticated }) => {
 
         if (active) {
             initName();
-            initChartData();
             initPortfolioValue();
+            initChartData();
         }
         return () => {
             active = false;
@@ -66,7 +67,7 @@ const Home = ({ isAuthenticated }) => {
         <div>
             <h1>
                 Voici votre portfolio, {name} <br /> Valeur :{" "}
-                {portfolioValue.toFixed(2)}
+                <NumberFormat value={portfolioValue.toFixed(2)} displayType={'text'} thousandSeparator={true} prefix={'$'} />
             </h1>
             {/* Le props key est necessaire pour que le graphique soit mis a jour une fois que les donnees du graphique sont modifiees
             Pour plus d'info: https://reactjs.org/docs/lists-and-keys.html
