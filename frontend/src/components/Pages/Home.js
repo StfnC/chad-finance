@@ -8,6 +8,7 @@ import { callToBackend } from "../../utils/requests";
 const Home = ({ isAuthenticated }) => {
     const [name, setName] = useState("");
     const [portfolioValue, setPortfolioValue] = useState(0);
+    const [roi, setRoi] = useState(0);
     const [chartData, setChartData] = useState([]);
 
     const initName = async () => {
@@ -19,7 +20,11 @@ const Home = ({ isAuthenticated }) => {
     const initPortfolioValue = async () => {
         // Fonction permettant de récuperer la valeur du portfolio
         const res = await callToBackend("GET", "/api/portfolio/", true);
-        setPortfolioValue(parseFloat(res.value) + parseFloat(res.current_amount));
+        const stocksValue = parseFloat(res.value);
+        const currentAmount = parseFloat(res.current_amount);
+        const startingAmount = parseFloat(res.starting_amount);
+        setPortfolioValue(stocksValue + currentAmount);
+        setRoi(((stocksValue + currentAmount) / startingAmount - 1) / 100);
     };
 
     const initChartData = async () => {
@@ -68,6 +73,7 @@ const Home = ({ isAuthenticated }) => {
             <h1>
                 Bienvenue, {name}! <br /> Valeur totale de votre portefeuille : <NumberFormat value={portfolioValue.toFixed(2)} displayType={'text'} thousandSeparator={true} prefix={'$'} />
             </h1>
+            <h2>Retour sur investissement: {roi.toFixed(2)}%</h2>
             <h2>Valeur de vos actions : </h2>
             {/* Le props key est necessaire pour que le graphique soit mis a jour une fois que les donnees du graphique sont modifiees
             Pour plus d'info: https://reactjs.org/docs/lists-and-keys.html
