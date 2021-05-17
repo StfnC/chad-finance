@@ -4,6 +4,8 @@ from django.contrib.auth.models import BaseUserManager
 class UserAccountManager(BaseUserManager):
     """
     Manager des utilisateurs
+
+    Puisqu'on n'utilise pas le model d'utilisateur par défaut, il faut créer notre propre manager.
     """
 
     def create_user(self, email, password=None, **kwargs):
