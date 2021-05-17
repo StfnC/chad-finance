@@ -43,7 +43,7 @@ const Navbar = ({ logout, isAuthenticated }) => {
                 variant="contained"
                 onClick={(e) => redirectTo("/login")}
             >
-                Login
+                Connexion
             </Button>
         );
     };

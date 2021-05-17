@@ -53,14 +53,14 @@ const Login = ({ login, isAuthenticated }) => {
                     color="textPrimary"
                     variant="h2"
                 >
-                    Log in
+                    Connexion
                 </Typography>
                 <form onSubmit={onSubmit}>
                     <TextField
                         className={classe.space}
-                        label="Username"
+                        label="Courriel"
                         variant="outlined"
-                        placeholder="Nom d'utilisateur"
+                        placeholder="Courriel"
                         value={email}
                         onInput={(e) => setEmail(e.target.value)}
                     />
@@ -80,7 +80,7 @@ const Login = ({ login, isAuthenticated }) => {
                         variant="contained"
                         color="primary"
                     >
-                        Login
+                        Se connecter
                     </Button>
                 </form>
                 <p>
