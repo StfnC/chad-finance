@@ -24,7 +24,7 @@ const Home = ({ isAuthenticated }) => {
         const currentAmount = parseFloat(res.current_amount);
         const startingAmount = parseFloat(res.starting_amount);
         setPortfolioValue(stocksValue + currentAmount);
-        setRoi(((stocksValue + currentAmount) / startingAmount - 1) / 100);
+        setRoi((((stocksValue + currentAmount) / startingAmount) - 1) * 100);
     };
 
     const initChartData = async () => {
