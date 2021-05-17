@@ -1,5 +1,7 @@
 # Projet d'intégration
 
+![Chad Finance](chad_finance_logo.png)
+
 ## Structure du projet
 
 Le projet est séparé en une application Django et une React.
